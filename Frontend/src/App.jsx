@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx'
-import SignInPage from './Pages/SignInPage.jsx';
+import SignInPage from './Pages/SignIn.jsx'
+import SignUp from './Pages/SignUp.jsx'
 import Home from './Pages/Home.jsx'
 import Footer from './components/Footer.jsx'
 
@@ -19,8 +20,15 @@ function App() {
         />
         <Route path="/signin" element={
           <>
-          <Navbar/>
+          <Navbar ShowSignIn={false}/>
           <SignInPage />
+          </>
+        } 
+          />
+        <Route path="/signup" element={
+          <>
+          <Navbar ShowSignIn={false}/>
+          <SignUp/>
           </>
         } 
           />
