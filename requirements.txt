@@ -1,0 +1,7 @@
+huggingface_hub
+langchain
+langgraph
+langsmith
+dotenv
+ddgs
+grandalf
