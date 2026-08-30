@@ -157,7 +157,7 @@ export default function Home() {
                                 Upload your resume
                             </button>
                             <select className="flex-2 bg-white text-gray-800 text-center border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500">
-                                <option key="default" value="" className="text-center"  selected hidden>Select a role</option>
+                                <option key="default" value="" className="text-center" hidden>Select a role</option>
                                 {Object.entries(roles).map((prop)=>(
                                     <optgroup key={prop[0]} label={prop[0]}>
                                         {

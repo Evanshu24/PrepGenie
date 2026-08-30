@@ -45,7 +45,7 @@ text-decoration: underline">Login</Link>
                         <input
                             type="password"
                             placeholder="Enter your password"
-                            className="w-full h-[56px] px-4 mb-3 border border-[#d8e1f2] rounded-xl text-lg focus:outline-none focus:border-[#2563EB]"
+                            className="w-full h-[56px] px-4 mb-7 border border-[#d8e1f2] rounded-xl text-lg focus:outline-none focus:border-[#2563EB]"
                         />
 
                         <FaEye className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[#999] cursor-pointer" />
