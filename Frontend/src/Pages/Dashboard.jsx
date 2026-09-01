@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 export default function Dashboard() {
     const roles = {
@@ -139,6 +139,7 @@ export default function Dashboard() {
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     const resumeInputRef = useRef(null);
     const LoginToken = localStorage.getItem("token");
+    const navigate = useNavigate();
     // console.log(LoginToken);
     useEffect(() => {
         fetch("http://localhost:5000/api/me", {
@@ -259,7 +260,7 @@ export default function Dashboard() {
     if (!user) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                Unable to load user data
+                Unable to load user data,Try refreshing the page once
             </div>
         );
     }
@@ -274,7 +275,10 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex py-10 gap-10">
-                        <aside className="flex flex-1 flex-col px-10 py-4 min-h-[20vh] bg-[#2563EB] text-white rounded-[20px] shadow-lg cursor-pointer items-center justify-center hover:bg-blue-500">
+                        <aside className="flex flex-1 flex-col px-10 py-4 min-h-[20vh] bg-[#2563EB] text-white rounded-[20px] shadow-lg cursor-pointer items-center justify-center hover:bg-blue-500" onClick={() => {
+                            navigate("/details");
+                        }
+                        }>
                             <p className="text-center">🎯Start Interview</p>
                             <p className="text-center">Practice with AI</p>
                         </aside>
@@ -326,10 +330,15 @@ export default function Dashboard() {
                     <div className="flex flex-col py-10 items-center justify-center">
                         <p className="text-2xl font-semibold mb-8">Your Progress</p>
 
-                        <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl">
+                        <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl">
                             <div className="flex-1 bg-white rounded-2xl shadow-md p-6 text-center border border-gray-200">
                                 <p className="text-gray-600 font-medium">Total Interviews</p>
                                 <p className="text-4xl font-bold text-[#2563EB] mt-3">{dashboardData?.totalInterviews}</p>
+                            </div>
+
+                            <div className="flex-1 bg-white rounded-2xl shadow-md p-6 text-center border border-gray-200">
+                                <p className="text-gray-600 font-medium">Completed Interviews</p>
+                                <p className="text-4xl font-bold text-[#2563EB] mt-3">{dashboardData?.completedInterviews}</p>
                             </div>
 
                             <div className="flex-1 bg-white rounded-2xl shadow-md p-6 text-center border border-gray-200">
@@ -346,8 +355,8 @@ export default function Dashboard() {
 
                     <div className="flex flex-col py-10 items-center justify-center">
                         <p className="text-2xl font-semibold mb-8">Recent Interviews</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-5xl">
-                            <aside className="relative">
+                        <div className="grid grid-cols-1 md:grid-cols-7 gap-5 w-full max-w-5xl">
+                            <aside className="relative md:col-span-3">
                                 <select className="bg-white text-gray-800 text-center border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 w-full" value={selectedRole}
                                     onChange={(e) => setSelectedRole(e.target.value)}>
                                     <option key="default" value="" className="text-center" hidden>Select a role</option>
@@ -363,14 +372,22 @@ export default function Dashboard() {
                                     ))}
                                 </select>
                             </aside>
-                            <aside className="relative">
-                                <select className="bg-white text-gray-800 text-center border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 w-full mb-5" value={selectedDifficulty}
+                            <aside className="relative md:col-span-3">
+                                <select className="bg-white text-gray-800 text-center border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500 w-full" value={selectedDifficulty}
                                     onChange={(e) => setSelectedDifficulty(e.target.value)}>
                                     <option key="default" value="" className="text-center" hidden>Select difficulty</option>
                                     <option key="easy" value="Easy" className="text-center" >Easy</option>
                                     <option key="medium" value="Medium" className="text-center" >Medium</option>
                                     <option key="hard" value="Hard" className="text-center" >Hard</option>
                                 </select>
+                            </aside>
+                            <aside className="relative md:col-span-1">
+                                <button className="bg-white text-gray-800 border border-gray-300 rounded-lg w-full h-[50px] shadow-sm focus:ring-2 text-center underline cursor-pointer font-semibold hover:text-blue-700 mb-5" onClick={() => {
+                                    setSelectedDifficulty("");
+                                    setSelectedRole("");
+                                }}>
+                                    Clear filters
+                                </button>
                             </aside>
                         </div>
                         <div className="w-full max-w-5xl bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
@@ -389,7 +406,9 @@ export default function Dashboard() {
                                         <div className="px-6 py-4">{interview.role}</div>
                                         <div className="px-6 py-4">{interview.difficulty}</div>
                                         <div className="px-6 py-4">{interview.duration} mins</div>
-                                        <div className="px-6 py-4 font-semibold text-[#2563EB]">{interview.score}/100</div>
+                                        <div className="px-6 py-4 font-semibold text-[#2563EB]">
+                                            {interview.score == null ? "—" : `${interview.score}/100`}
+                                        </div>
                                         <div className="px-6 py-4">{new Date(interview.createdAt).toLocaleDateString('en-GB', {
                                             day: 'numeric',
                                             month: 'short',
@@ -407,7 +426,7 @@ export default function Dashboard() {
                             }
                         </div>
 
-                        <button className="mt-6 font-semibold hover:underline cursor-pointer">
+                        <button className="mt-6 font-semibold underline cursor-pointer hover:text-blue-700">
                             View All Interviews →
                         </button>
                     </div>

@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function Navbar() {
+    const navigate=useNavigate();
+    const handleLogout=()=>{
+        console.log("Logging out");
+        localStorage.removeItem("token");
+        navigate("/signin");
+    }
     return (
         <>
         <nav className="w-full bg-[#EFF6FF] px-8 py-4">
@@ -19,12 +25,12 @@ export default function Navbar() {
                         </span>
                     </Link>
                 </div>
-                <Link
-                    to="/signin"
-                    className="ml-auto border-2 border-black px-5 py-2 rounded-lg hover:bg-black hover:text-white transition"
+                <button
+                    className="ml-auto border-2 border-black px-5 py-2 rounded-lg hover:bg-black hover:text-white transition cursor-pointer"
+                    onClick={handleLogout}
                 >
-                    Profile
-                </Link>
+                Log out
+                </button>
             </div>
         </nav>
         </>

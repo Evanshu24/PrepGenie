@@ -3,11 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx'
 import SignInPage from './Pages/SignIn.jsx'
 import SignUp from './Pages/SignUp.jsx'
-import Home from './Pages/Home.jsx'
 import Footer from './components/Footer.jsx'
 import Dashboard from "./Pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import LoggedInNavbar from './components/loggedInNavbar.jsx';
+import InterviewDetails from './Pages/InterviewDetails.jsx';
 
 function App() {
   return (
@@ -47,6 +47,9 @@ function App() {
           </>
         }
         />
+        <Route path="/details" element={
+          <InterviewDetails/>
+        }/>
       </Routes>
     </BrowserRouter>
   )

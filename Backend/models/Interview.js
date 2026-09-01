@@ -29,6 +29,12 @@ const interviewSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+
+    status: {
+        type: String,
+        enum: ["in-progress", "abandoned", "completed"],
+        default: "in-progress"
     }
 });
 
