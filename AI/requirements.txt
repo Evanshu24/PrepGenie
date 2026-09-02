@@ -1,0 +1,13 @@
+huggingface_hub
+langchain
+langgraph
+langsmith
+dotenv
+ddgs
+grandalf
+bs4
+langchain_google_genai
+langchain_openai
+langchain_huggingface
+pymongo
+fastapi
