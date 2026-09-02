@@ -1,0 +1,1602 @@
+[
+  {
+    "id": "q_001",
+    "role": ["Software Engineer"],
+    "tags": ["data-structures", "arrays"],
+    "difficulty": "easy",
+    "question": "How do you find the missing number in a given integer array of 1 to 100?",
+    "expected_topics": ["arithmetic progression", "bit manipulation", "XOR"]
+  },
+  {
+    "id": "q_002",
+    "role": ["Software Engineer"],
+    "tags": ["algorithms", "sorting"],
+    "difficulty": "medium",
+    "question": "Explain the quicksort algorithm and its time complexity in the worst-case scenario.",
+    "expected_topics": ["divide and conquer", "pivot selection", "O(n^2)", "O(n log n)"]
+  },
+  {
+    "id": "q_003",
+    "role": ["Software Engineer"],
+    "tags": ["design-patterns", "singleton"],
+    "difficulty": "easy",
+    "question": "What is the Singleton design pattern and when is it considered an anti-pattern?",
+    "expected_topics": ["global state", "thread safety", "dependency injection", "testing difficulty"]
+  },
+  {
+    "id": "q_004",
+    "role": ["Software Engineer"],
+    "tags": ["oop", "polymorphism"],
+    "difficulty": "medium",
+    "question": "Explain the difference between method overloading and method overriding.",
+    "expected_topics": ["compile-time polymorphism", "runtime polymorphism", "inheritance", "signatures"]
+  },
+  {
+    "id": "q_005",
+    "role": ["Software Engineer"],
+    "tags": ["memory-management", "garbage-collection"],
+    "difficulty": "hard",
+    "question": "How does a generational garbage collector work?",
+    "expected_topics": ["young generation", "old generation", "mark-and-sweep", "minor vs major GC"]
+  },
+  {
+    "id": "q_006",
+    "role": ["Software Engineer"],
+    "tags": ["concurrency", "threads"],
+    "difficulty": "medium",
+    "question": "What is the difference between a process and a thread?",
+    "expected_topics": ["memory space", "context switching", "IPC", "shared resources"]
+  },
+  {
+    "id": "q_007",
+    "role": ["Software Engineer"],
+    "tags": ["architecture", "microservices"],
+    "difficulty": "medium",
+    "question": "What are the trade-offs of using a microservices architecture compared to a monolith?",
+    "expected_topics": ["deployment complexity", "scalability", "network latency", "independent scaling"]
+  },
+  {
+    "id": "q_008",
+    "role": ["Software Engineer"],
+    "tags": ["testing", "unit-testing"],
+    "difficulty": "easy",
+    "question": "What is Test-Driven Development (TDD)?",
+    "expected_topics": ["red-green-refactor", "test coverage", "design improvement"]
+  },
+  {
+    "id": "q_009",
+    "role": ["Software Engineer"],
+    "tags": ["data-structures", "hash-tables"],
+    "difficulty": "medium",
+    "question": "How does a hash map handle collisions?",
+    "expected_topics": ["chaining", "open addressing", "load factor", "hash function"]
+  },
+  {
+    "id": "q_010",
+    "role": ["Software Engineer"],
+    "tags": ["algorithms", "graphs"],
+    "difficulty": "hard",
+    "question": "Explain Dijkstra's algorithm for finding the shortest path.",
+    "expected_topics": ["greedy algorithm", "priority queue", "weighted graphs", "relaxation"]
+  },
+  {
+    "id": "q_011",
+    "role": ["Software Engineer"],
+    "tags": ["version-control", "git"],
+    "difficulty": "easy",
+    "question": "What is the difference between git merge and git rebase?",
+    "expected_topics": ["commit history", "fast-forward", "conflict resolution", "linear history"]
+  },
+  {
+    "id": "q_012",
+    "role": ["Software Engineer"],
+    "tags": ["system-design", "scalability"],
+    "difficulty": "hard",
+    "question": "How would you design a URL shortener like bit.ly?",
+    "expected_topics": ["hashing", "base62 encoding", "database sharding", "caching"]
+  },
+  {
+    "id": "q_013",
+    "role": ["Software Engineer"],
+    "tags": ["networking", "http"],
+    "difficulty": "medium",
+    "question": "What is the difference between HTTP PUT and POST methods?",
+    "expected_topics": ["idempotency", "resource creation", "resource update"]
+  },
+  {
+    "id": "q_014",
+    "role": ["Software Engineer"],
+    "tags": ["databases", "sql"],
+    "difficulty": "medium",
+    "question": "What are ACID properties in a database?",
+    "expected_topics": ["Atomicity", "Consistency", "Isolation", "Durability"]
+  },
+  {
+    "id": "q_015",
+    "role": ["Software Engineer"],
+    "tags": ["agile", "sdlc"],
+    "difficulty": "easy",
+    "question": "Can you explain the Agile software development lifecycle?",
+    "expected_topics": ["sprints", "scrum", "iterative development", "retrospectives"]
+  },
+  {
+    "id": "q_016",
+    "role": ["Frontend Developer"],
+    "tags": ["css", "layout"],
+    "difficulty": "easy",
+    "question": "What is the difference between Flexbox and CSS Grid?",
+    "expected_topics": ["1D vs 2D layout", "alignment", "responsive design"]
+  },
+  {
+    "id": "q_017",
+    "role": ["Frontend Developer"],
+    "tags": ["javascript", "closures"],
+    "difficulty": "medium",
+    "question": "Explain closures in JavaScript and provide a practical use case.",
+    "expected_topics": ["lexical scoping", "data privacy", "currying", "event handlers"]
+  },
+  {
+    "id": "q_018",
+    "role": ["Frontend Developer"],
+    "tags": ["dom", "performance"],
+    "difficulty": "medium",
+    "question": "What is the virtual DOM and how does it improve performance?",
+    "expected_topics": ["reconciliation", "diffing algorithm", "React", "batch updates"]
+  },
+  {
+    "id": "q_019",
+    "role": ["Frontend Developer"],
+    "tags": ["javascript", "async"],
+    "difficulty": "medium",
+    "question": "What is the event loop in JavaScript?",
+    "expected_topics": ["call stack", "task queue", "microtasks", "non-blocking I/O"]
+  },
+  {
+    "id": "q_020",
+    "role": ["Frontend Developer"],
+    "tags": ["web-accessibility", "a11y"],
+    "difficulty": "easy",
+    "question": "How do you ensure a web application is accessible?",
+    "expected_topics": ["ARIA roles", "semantic HTML", "keyboard navigation", "color contrast"]
+  },
+  {
+    "id": "q_021",
+    "role": ["Frontend Developer"],
+    "tags": ["css", "specificity"],
+    "difficulty": "easy",
+    "question": "How is CSS specificity calculated?",
+    "expected_topics": ["inline styles", "IDs", "classes", "tags"]
+  },
+  {
+    "id": "q_022",
+    "role": ["Frontend Developer"],
+    "tags": ["javascript", "es6"],
+    "difficulty": "easy",
+    "question": "What is the difference between let, const, and var?",
+    "expected_topics": ["block scope", "function scope", "hoisting", "mutability"]
+  },
+  {
+    "id": "q_023",
+    "role": ["Frontend Developer"],
+    "tags": ["performance", "optimization"],
+    "difficulty": "hard",
+    "question": "How do you optimize the Critical Rendering Path?",
+    "expected_topics": ["render-blocking resources", "async/defer scripts", "CSS delivery", "DOM size"]
+  },
+  {
+    "id": "q_024",
+    "role": ["Frontend Developer"],
+    "tags": ["javascript", "this-keyword"],
+    "difficulty": "medium",
+    "question": "How does the 'this' keyword work in JavaScript?",
+    "expected_topics": ["global context", "object methods", "arrow functions", "call/apply/bind"]
+  },
+  {
+    "id": "q_025",
+    "role": ["Frontend Developer"],
+    "tags": ["security", "xss"],
+    "difficulty": "medium",
+    "question": "What is Cross-Site Scripting (XSS) and how do you prevent it?",
+    "expected_topics": ["input sanitization", "Content Security Policy", "escaping HTML"]
+  },
+  {
+    "id": "q_026",
+    "role": ["Frontend Developer"],
+    "tags": ["state-management", "react"],
+    "difficulty": "medium",
+    "question": "Compare Context API with Redux for state management.",
+    "expected_topics": ["prop drilling", "bundle size", "middleware", "complex state"]
+  },
+  {
+    "id": "q_027",
+    "role": ["Frontend Developer"],
+    "tags": ["css", "preprocessors"],
+    "difficulty": "easy",
+    "question": "What are the benefits of using a CSS preprocessor like SASS?",
+    "expected_topics": ["variables", "nesting", "mixins", "maintainability"]
+  },
+  {
+    "id": "q_028",
+    "role": ["Frontend Developer"],
+    "tags": ["testing", "e2e"],
+    "difficulty": "medium",
+    "question": "How do you approach end-to-end testing in a frontend application?",
+    "expected_topics": ["Cypress", "Selenium", "user flows", "flaky tests"]
+  },
+  {
+    "id": "q_029",
+    "role": ["Frontend Developer"],
+    "tags": ["browser", "storage"],
+    "difficulty": "easy",
+    "question": "What is the difference between LocalStorage, SessionStorage, and Cookies?",
+    "expected_topics": ["expiration", "capacity", "server communication", "security"]
+  },
+  {
+    "id": "q_030",
+    "role": ["Frontend Developer"],
+    "tags": ["pwa", "service-workers"],
+    "difficulty": "hard",
+    "question": "How do service workers enable offline functionality in Progressive Web Apps?",
+    "expected_topics": ["caching strategies", "background sync", "push notifications", "lifecycle"]
+  },
+  {
+    "id": "q_031",
+    "role": ["Backend Developer"],
+    "tags": ["api-design", "rest"],
+    "difficulty": "easy",
+    "question": "What are the key principles of RESTful API design?",
+    "expected_topics": ["statelessness", "resource-based URLs", "HTTP methods", "HATEOAS"]
+  },
+  {
+    "id": "q_032",
+    "role": ["Backend Developer"],
+    "tags": ["databases", "nosql"],
+    "difficulty": "medium",
+    "question": "When would you choose a NoSQL database over a relational database?",
+    "expected_topics": ["unstructured data", "horizontal scaling", "flexible schema", "CAP theorem"]
+  },
+  {
+    "id": "q_033",
+    "role": ["Backend Developer"],
+    "tags": ["authentication", "jwt"],
+    "difficulty": "medium",
+    "question": "How do JSON Web Tokens (JWT) work for authentication?",
+    "expected_topics": ["header/payload/signature", "stateless auth", "token expiration", "security"]
+  },
+  {
+    "id": "q_034",
+    "role": ["Backend Developer"],
+    "tags": ["caching", "redis"],
+    "difficulty": "medium",
+    "question": "What are common cache eviction policies and when to use them?",
+    "expected_topics": ["LRU", "LFU", "FIFO", "TTL"]
+  },
+  {
+    "id": "q_035",
+    "role": ["Backend Developer"],
+    "tags": ["system-design", "load-balancing"],
+    "difficulty": "medium",
+    "question": "Explain the difference between Layer 4 and Layer 7 load balancing.",
+    "expected_topics": ["transport layer", "application layer", "SSL termination", "routing logic"]
+  },
+  {
+    "id": "q_036",
+    "role": ["Backend Developer"],
+    "tags": ["databases", "indexing"],
+    "difficulty": "medium",
+    "question": "How do database indexes work under the hood?",
+    "expected_topics": ["B-trees", "hash indexes", "read vs write performance", "clustered vs non-clustered"]
+  },
+  {
+    "id": "q_037",
+    "role": ["Backend Developer"],
+    "tags": ["message-queues", "kafka"],
+    "difficulty": "hard",
+    "question": "How does Kafka achieve high throughput and fault tolerance?",
+    "expected_topics": ["append-only logs", "partitions", "consumer groups", "replication"]
+  },
+  {
+    "id": "q_038",
+    "role": ["Backend Developer"],
+    "tags": ["security", "sql-injection"],
+    "difficulty": "easy",
+    "question": "How do you prevent SQL injection vulnerabilities?",
+    "expected_topics": ["prepared statements", "parameterized queries", "ORMs", "input validation"]
+  },
+  {
+    "id": "q_039",
+    "role": ["Backend Developer"],
+    "tags": ["architecture", "graphql"],
+    "difficulty": "medium",
+    "question": "What are the advantages of GraphQL over REST?",
+    "expected_topics": ["over-fetching", "under-fetching", "single endpoint", "strongly typed schema"]
+  },
+  {
+    "id": "q_040",
+    "role": ["Backend Developer"],
+    "tags": ["concurrency", "locks"],
+    "difficulty": "hard",
+    "question": "What is the difference between optimistic and pessimistic locking?",
+    "expected_topics": ["version numbers", "row locks", "transaction isolation", "contention"]
+  },
+  {
+    "id": "q_041",
+    "role": ["Backend Developer"],
+    "tags": ["deployment", "docker"],
+    "difficulty": "easy",
+    "question": "Why use Docker for backend applications?",
+    "expected_topics": ["environment consistency", "isolation", "portability", "resource efficiency"]
+  },
+  {
+    "id": "q_042",
+    "role": ["Backend Developer"],
+    "tags": ["databases", "transactions"],
+    "difficulty": "medium",
+    "question": "Explain the CAP theorem.",
+    "expected_topics": ["Consistency", "Availability", "Partition Tolerance", "network failures"]
+  },
+  {
+    "id": "q_043",
+    "role": ["Backend Developer"],
+    "tags": ["api", "rate-limiting"],
+    "difficulty": "medium",
+    "question": "How would you implement rate limiting for an API?",
+    "expected_topics": ["token bucket", "leaky bucket", "sliding window log", "Redis"]
+  },
+  {
+    "id": "q_044",
+    "role": ["Backend Developer"],
+    "tags": ["testing", "mocking"],
+    "difficulty": "easy",
+    "question": "What is the difference between a mock and a stub?",
+    "expected_topics": ["state verification", "behavior verification", "test doubles"]
+  },
+  {
+    "id": "q_045",
+    "role": ["Backend Developer"],
+    "tags": ["networking", "websockets"],
+    "difficulty": "medium",
+    "question": "When would you use WebSockets instead of HTTP polling?",
+    "expected_topics": ["real-time communication", "persistent connection", "low latency", "server push"]
+  },
+  {
+    "id": "q_046",
+    "role": ["Full Stack Developer"],
+    "tags": ["architecture", "ssr-vs-csr"],
+    "difficulty": "medium",
+    "question": "What are the trade-offs between Server-Side Rendering (SSR) and Client-Side Rendering (CSR)?",
+    "expected_topics": ["SEO", "initial load time", "TTI", "server load"]
+  },
+  {
+    "id": "q_047",
+    "role": ["Full Stack Developer"],
+    "tags": ["security", "cors"],
+    "difficulty": "easy",
+    "question": "What is CORS and how do you configure it in a backend application?",
+    "expected_topics": ["same-origin policy", "preflight requests", "Access-Control-Allow-Origin", "headers"]
+  },
+  {
+    "id": "q_048",
+    "role": ["Full Stack Developer"],
+    "tags": ["databases", "orm"],
+    "difficulty": "medium",
+    "question": "What are the pros and cons of using an ORM?",
+    "expected_topics": ["developer productivity", "database abstraction", "N+1 query problem", "performance overhead"]
+  },
+  {
+    "id": "q_049",
+    "role": ["Full Stack Developer"],
+    "tags": ["authentication", "oauth"],
+    "difficulty": "medium",
+    "question": "Explain the OAuth 2.0 authorization code flow.",
+    "expected_topics": ["authorization server", "access token", "refresh token", "client secret"]
+  },
+  {
+    "id": "q_050",
+    "role": ["Full Stack Developer"],
+    "tags": ["deployment", "ci-cd"],
+    "difficulty": "easy",
+    "question": "How do you ensure changes in frontend and backend APIs are deployed synchronously without breaking?",
+    "expected_topics": ["API versioning", "backward compatibility", "feature flags", "deployment orchestration"]
+  },
+  {
+    "id": "q_051",
+    "role": ["Full Stack Developer"],
+    "tags": ["performance", "caching"],
+    "difficulty": "medium",
+    "question": "Where can caching be implemented across a full stack application?",
+    "expected_topics": ["browser cache", "CDN", "reverse proxy", "application cache", "database cache"]
+  },
+  {
+    "id": "q_052",
+    "role": ["Full Stack Developer"],
+    "tags": ["state-management", "sessions"],
+    "difficulty": "medium",
+    "question": "How do you scale stateful applications like those using server-side sessions?",
+    "expected_topics": ["sticky sessions", "external session store", "Redis", "stateless alternatives"]
+  },
+  {
+    "id": "q_053",
+    "role": ["Full Stack Developer"],
+    "tags": ["networking", "dns"],
+    "difficulty": "easy",
+    "question": "What happens when you enter a URL into your browser? (Full Stack Perspective)",
+    "expected_topics": ["DNS lookup", "TCP handshake", "TLS", "HTTP request", "rendering"]
+  },
+  {
+    "id": "q_054",
+    "role": ["Full Stack Developer"],
+    "tags": ["security", "csrf"],
+    "difficulty": "medium",
+    "question": "What is CSRF and how do you mitigate it?",
+    "expected_topics": ["anti-CSRF tokens", "SameSite cookie attribute", "origin verification"]
+  },
+  {
+    "id": "q_055",
+    "role": ["Full Stack Developer"],
+    "tags": ["architecture", "monorepo"],
+    "difficulty": "medium",
+    "question": "What are the benefits of using a monorepo for a full stack project?",
+    "expected_topics": ["code sharing", "dependency management", "unified CI/CD", "tooling"]
+  },
+  {
+    "id": "q_056",
+    "role": ["Full Stack Developer"],
+    "tags": ["databases", "schema-design"],
+    "difficulty": "hard",
+    "question": "How would you design the database schema for a social media feed?",
+    "expected_topics": ["normalization vs denormalization", "fan-out on read", "fan-out on write", "indexes"]
+  },
+  {
+    "id": "q_057",
+    "role": ["Full Stack Developer"],
+    "tags": ["api", "pagination"],
+    "difficulty": "easy",
+    "question": "What is the difference between offset-based and cursor-based pagination?",
+    "expected_topics": ["performance on large datasets", "data inconsistency", "implementation complexity"]
+  },
+  {
+    "id": "q_058",
+    "role": ["Full Stack Developer"],
+    "tags": ["testing", "integration"],
+    "difficulty": "medium",
+    "question": "How do you write integration tests that require both frontend and backend interactions?",
+    "expected_topics": ["test databases", "API mocking", "environment setup", "test data seeding"]
+  },
+  {
+    "id": "q_059",
+    "role": ["Full Stack Developer"],
+    "tags": ["architecture", "webhooks"],
+    "difficulty": "medium",
+    "question": "How do webhooks work and how would you securely implement a webhook receiver?",
+    "expected_topics": ["push vs pull", "signature verification", "idempotency", "async processing"]
+  },
+  {
+    "id": "q_060",
+    "role": ["Full Stack Developer"],
+    "tags": ["performance", "image-optimization"],
+    "difficulty": "easy",
+    "question": "How do you handle user-uploaded images in a full stack application efficiently?",
+    "expected_topics": ["cloud storage (S3)", "image compression", "CDNs", "background processing"]
+  },
+  {
+    "id": "q_061",
+    "role": ["DevOps Engineer"],
+    "tags": ["containers", "docker"],
+    "difficulty": "easy",
+    "question": "What is the difference between a Docker image and a Docker container?",
+    "expected_topics": ["templates vs instances", "immutability", "runtime environments"]
+  },
+  {
+    "id": "q_062",
+    "role": ["DevOps Engineer"],
+    "tags": ["orchestration", "kubernetes"],
+    "difficulty": "hard",
+    "question": "Explain the architecture of a Kubernetes cluster.",
+    "expected_topics": ["control plane", "worker nodes", "kube-apiserver", "kubelet", "etcd"]
+  },
+  {
+    "id": "q_063",
+    "role": ["DevOps Engineer"],
+    "tags": ["iac", "terraform"],
+    "difficulty": "medium",
+    "question": "How does Terraform manage state and why is it important?",
+    "expected_topics": ["state files", "remote backend", "locking", "infrastructure drift"]
+  },
+  {
+    "id": "q_064",
+    "role": ["DevOps Engineer"],
+    "tags": ["ci-cd", "jenkins"],
+    "difficulty": "medium",
+    "question": "How do you implement a secure CI/CD pipeline?",
+    "expected_topics": ["secret management", "SAST/DAST", "vulnerability scanning", "least privilege"]
+  },
+  {
+    "id": "q_065",
+    "role": ["DevOps Engineer"],
+    "tags": ["monitoring", "prometheus"],
+    "difficulty": "medium",
+    "question": "What is the difference between Prometheus and the ELK stack?",
+    "expected_topics": ["metrics vs logs", "pull vs push model", "time-series database", "search engine"]
+  },
+  {
+    "id": "q_066",
+    "role": ["DevOps Engineer"],
+    "tags": ["networking", "dns"],
+    "difficulty": "medium",
+    "question": "Explain the different types of DNS records.",
+    "expected_topics": ["A", "AAAA", "CNAME", "MX", "TXT", "Alias"]
+  },
+  {
+    "id": "q_067",
+    "role": ["DevOps Engineer"],
+    "tags": ["linux", "bash"],
+    "difficulty": "easy",
+    "question": "How do you find all files modified in the last 7 days in a Linux directory?",
+    "expected_topics": ["find command", "-mtime", "-type f"]
+  },
+  {
+    "id": "q_068",
+    "role": ["DevOps Engineer"],
+    "tags": ["security", "iam"],
+    "difficulty": "medium",
+    "question": "What is the principle of least privilege in cloud IAM?",
+    "expected_topics": ["role-based access control", "policies", "temporary credentials", "auditing"]
+  },
+  {
+    "id": "q_069",
+    "role": ["DevOps Engineer"],
+    "tags": ["orchestration", "kubernetes"],
+    "difficulty": "hard",
+    "question": "How do you handle persistent storage in Kubernetes?",
+    "expected_topics": ["Persistent Volumes (PV)", "Persistent Volume Claims (PVC)", "Storage Classes", "CSI drivers"]
+  },
+  {
+    "id": "q_070",
+    "role": ["DevOps Engineer"],
+    "tags": ["infrastructure", "load-balancing"],
+    "difficulty": "medium",
+    "question": "What is sticky session load balancing and what are its drawbacks?",
+    "expected_topics": ["session persistence", "uneven load distribution", "fault tolerance", "statelessness"]
+  },
+  {
+    "id": "q_071",
+    "role": ["DevOps Engineer"],
+    "tags": ["ci-cd", "deployment-strategies"],
+    "difficulty": "medium",
+    "question": "What is Canary Deployment and how does it differ from Blue-Green Deployment?",
+    "expected_topics": ["incremental traffic routing", "risk mitigation", "environment duplication"]
+  },
+  {
+    "id": "q_072",
+    "role": ["DevOps Engineer"],
+    "tags": ["linux", "troubleshooting"],
+    "difficulty": "hard",
+    "question": "A server is unresponsive. How do you troubleshoot high CPU or Memory usage?",
+    "expected_topics": ["top/htop", "dmesg", "strace", "OOM killer", "sar"]
+  },
+  {
+    "id": "q_073",
+    "role": ["DevOps Engineer"],
+    "tags": ["iac", "ansible"],
+    "difficulty": "medium",
+    "question": "What is idempotency in configuration management tools like Ansible?",
+    "expected_topics": ["safe repeated execution", "state convergence", "declarative vs imperative"]
+  },
+  {
+    "id": "q_074",
+    "role": ["DevOps Engineer"],
+    "tags": ["networking", "vpc"],
+    "difficulty": "hard",
+    "question": "How do you design a secure VPC architecture?",
+    "expected_topics": ["public/private subnets", "NAT gateways", "Security Groups", "NACLs", "bastion hosts"]
+  },
+  {
+    "id": "q_075",
+    "role": ["DevOps Engineer"],
+    "tags": ["sre", "slis"],
+    "difficulty": "medium",
+    "question": "Explain SLAs, SLOs, and SLAs. How do they interrelate?",
+    "expected_topics": ["Service Level Agreement", "Service Level Objective", "Service Level Indicator", "error budgets"]
+  },
+  {
+    "id": "q_076",
+    "role": ["Data Scientist"],
+    "tags": ["statistics", "p-value"],
+    "difficulty": "easy",
+    "question": "What is a p-value and how is it used in hypothesis testing?",
+    "expected_topics": ["null hypothesis", "statistical significance", "alpha level", "Type I error"]
+  },
+  {
+    "id": "q_077",
+    "role": ["Data Scientist"],
+    "tags": ["machine-learning", "overfitting"],
+    "difficulty": "medium",
+    "question": "How do you detect and prevent overfitting in a machine learning model?",
+    "expected_topics": ["cross-validation", "regularization (L1/L2)", "pruning", "dropout", "early stopping"]
+  },
+  {
+    "id": "q_078",
+    "role": ["Data Scientist"],
+    "tags": ["algorithms", "random-forest"],
+    "difficulty": "medium",
+    "question": "How does a Random Forest model work?",
+    "expected_topics": ["decision trees", "bagging", "feature randomness", "ensemble learning"]
+  },
+  {
+    "id": "q_079",
+    "role": ["Data Scientist"],
+    "tags": ["data-preprocessing", "pca"],
+    "difficulty": "hard",
+    "question": "Explain Principal Component Analysis (PCA) and its assumptions.",
+    "expected_topics": ["dimensionality reduction", "eigenvectors", "variance maximization", "linear combinations"]
+  },
+  {
+    "id": "q_080",
+    "role": ["Data Scientist"],
+    "tags": ["evaluation", "metrics"],
+    "difficulty": "medium",
+    "question": "When would you use F1 Score instead of Accuracy?",
+    "expected_topics": ["imbalanced datasets", "precision", "recall", "false positives vs false negatives"]
+  },
+  {
+    "id": "q_081",
+    "role": ["Data Scientist"],
+    "tags": ["statistics", "ab-testing"],
+    "difficulty": "medium",
+    "question": "How do you design and analyze an A/B test?",
+    "expected_topics": ["randomization", "sample size calculation", "control vs treatment", "statistical significance"]
+  },
+  {
+    "id": "q_082",
+    "role": ["Data Scientist"],
+    "tags": ["nlp", "text-processing"],
+    "difficulty": "medium",
+    "question": "What is TF-IDF and how does it work?",
+    "expected_topics": ["term frequency", "inverse document frequency", "stop words", "text vectorization"]
+  },
+  {
+    "id": "q_083",
+    "role": ["Data Scientist"],
+    "tags": ["machine-learning", "clustering"],
+    "difficulty": "medium",
+    "question": "Explain K-Means clustering and how to choose the optimal K.",
+    "expected_topics": ["centroids", "Elbow method", "Silhouette score", "unsupervised learning"]
+  },
+  {
+    "id": "q_084",
+    "role": ["Data Scientist"],
+    "tags": ["statistics", "distributions"],
+    "difficulty": "easy",
+    "question": "What is the Central Limit Theorem and why is it important?",
+    "expected_topics": ["normal distribution", "sample means", "large sample size", "hypothesis testing foundation"]
+  },
+  {
+    "id": "q_085",
+    "role": ["Data Scientist"],
+    "tags": ["machine-learning", "logistic-regression"],
+    "difficulty": "medium",
+    "question": "How does Logistic Regression output probabilities?",
+    "expected_topics": ["sigmoid function", "log odds", "maximum likelihood estimation", "decision boundary"]
+  },
+  {
+    "id": "q_086",
+    "role": ["Data Scientist"],
+    "tags": ["time-series", "forecasting"],
+    "difficulty": "hard",
+    "question": "What is stationarity in time series analysis and why does it matter?",
+    "expected_topics": ["constant mean/variance", "Dickey-Fuller test", "differencing", "ARIMA models"]
+  },
+  {
+    "id": "q_087",
+    "role": ["Data Scientist"],
+    "tags": ["data-cleaning", "imputation"],
+    "difficulty": "easy",
+    "question": "What are the different types of missing data mechanisms?",
+    "expected_topics": ["MCAR", "MAR", "MNAR", "imputation strategies"]
+  },
+  {
+    "id": "q_088",
+    "role": ["Data Scientist"],
+    "tags": ["machine-learning", "svm"],
+    "difficulty": "hard",
+    "question": "Explain the kernel trick in Support Vector Machines.",
+    "expected_topics": ["non-linear separable data", "higher dimensions", "RBF kernel", "computational efficiency"]
+  },
+  {
+    "id": "q_089",
+    "role": ["Data Scientist"],
+    "tags": ["deep-learning", "neural-networks"],
+    "difficulty": "medium",
+    "question": "What is the role of an activation function in a neural network?",
+    "expected_topics": ["non-linearity", "ReLU", "vanishing gradient problem", "network depth"]
+  },
+  {
+    "id": "q_090",
+    "role": ["Data Scientist"],
+    "tags": ["model-deployment", "mlops"],
+    "difficulty": "medium",
+    "question": "What is data drift and how do you handle it in production models?",
+    "expected_topics": ["concept drift", "model monitoring", "retraining strategies", "performance degradation"]
+  },
+  {
+    "id": "q_091",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["model-deployment", "serving"],
+    "difficulty": "hard",
+    "question": "How do you optimize a deep learning model for real-time inference latency?",
+    "expected_topics": ["quantization", "pruning", "ONNX/TensorRT", "batching"]
+  },
+  {
+    "id": "q_092",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["data-engineering", "pipelines"],
+    "difficulty": "medium",
+    "question": "How would you design a scalable data ingestion pipeline for training ML models?",
+    "expected_topics": ["ETL/ELT", "Apache Kafka", "Apache Spark", "data lakes", "feature stores"]
+  },
+  {
+    "id": "q_093",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["deep-learning", "cnn"],
+    "difficulty": "medium",
+    "question": "Explain how max pooling works in Convolutional Neural Networks.",
+    "expected_topics": ["spatial variance", "dimensionality reduction", "feature extraction", "computational cost"]
+  },
+  {
+    "id": "q_094",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["mlops", "versioning"],
+    "difficulty": "medium",
+    "question": "Why is data versioning important and what tools would you use?",
+    "expected_topics": ["reproducibility", "DVC", "MLflow", "experiment tracking"]
+  },
+  {
+    "id": "q_095",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["algorithms", "gradient-descent"],
+    "difficulty": "medium",
+    "question": "What is the difference between Stochastic Gradient Descent (SGD) and Mini-batch Gradient Descent?",
+    "expected_topics": ["convergence speed", "noise", "memory usage", "hardware optimization"]
+  },
+  {
+    "id": "q_096",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["deep-learning", "transformers"],
+    "difficulty": "hard",
+    "question": "Explain the self-attention mechanism in Transformer architectures.",
+    "expected_topics": ["Query, Key, Value vectors", "attention scores", "parallelization", "long-range dependencies"]
+  },
+  {
+    "id": "q_097",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["nlp", "embeddings"],
+    "difficulty": "medium",
+    "question": "What is the difference between Word2Vec and BERT embeddings?",
+    "expected_topics": ["context-free vs context-aware", "static vs dynamic", "bidirectional context", "masked language modeling"]
+  },
+  {
+    "id": "q_098",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["infrastructure", "gpu"],
+    "difficulty": "hard",
+    "question": "How do you handle out-of-memory (OOM) errors when training large deep learning models?",
+    "expected_topics": ["gradient accumulation", "mixed precision training", "batch size reduction", "model parallelism"]
+  },
+  {
+    "id": "q_099",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["evaluation", "recommendation-systems"],
+    "difficulty": "medium",
+    "question": "How do you evaluate a recommendation system offline?",
+    "expected_topics": ["NDCG", "Precision@k", "Recall@k", "Mean Average Precision"]
+  },
+  {
+    "id": "q_100",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["machine-learning", "hyperparameter-tuning"],
+    "difficulty": "medium",
+    "question": "Compare Grid Search and Random Search for hyperparameter optimization.",
+    "expected_topics": ["computational cost", "search space coverage", "Bayesian optimization"]
+  },
+  {
+    "id": "q_101",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["deep-learning", "rnn"],
+    "difficulty": "hard",
+    "question": "What is the vanishing gradient problem in RNNs and how do LSTMs solve it?",
+    "expected_topics": ["backpropagation through time", "forget gates", "cell state", "additive gradient flow"]
+  },
+  {
+    "id": "q_102",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["system-design", "ml-architecture"],
+    "difficulty": "hard",
+    "question": "Design a system for real-time fraud detection on credit card transactions.",
+    "expected_topics": ["stream processing", "feature latency", "model serving", "fallback mechanisms"]
+  },
+  {
+    "id": "q_103",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["mlops", "ci-cd"],
+    "difficulty": "medium",
+    "question": "How does CI/CD for Machine Learning differ from traditional software engineering?",
+    "expected_topics": ["Continuous Training (CT)", "data validation", "model evaluation gates", "model registry"]
+  },
+  {
+    "id": "q_104",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["deep-learning", "generative-models"],
+    "difficulty": "hard",
+    "question": "How does a Generative Adversarial Network (GAN) work?",
+    "expected_topics": ["generator", "discriminator", "minimax game", "mode collapse"]
+  },
+  {
+    "id": "q_105",
+    "role": ["Machine Learning Engineer"],
+    "tags": ["explainability", "xai"],
+    "difficulty": "medium",
+    "question": "How do you interpret the predictions of a complex black-box model?",
+    "expected_topics": ["SHAP values", "LIME", "feature importance", "partial dependence plots"]
+  },
+  {
+    "id": "q_106",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "prompt-engineering"],
+    "difficulty": "easy",
+    "question": "What are the key techniques for effective prompt engineering with LLMs?",
+    "expected_topics": ["few-shot prompting", "chain-of-thought", "context framing", "temperature settings"]
+  },
+  {
+    "id": "q_107",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "rag"],
+    "difficulty": "medium",
+    "question": "Explain Retrieval-Augmented Generation (RAG) and its benefits over fine-tuning.",
+    "expected_topics": ["hallucination reduction", "up-to-date knowledge", "vector databases", "cost efficiency"]
+  },
+  {
+    "id": "q_108",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "fine-tuning"],
+    "difficulty": "hard",
+    "question": "What is LoRA (Low-Rank Adaptation) and how does it make LLM fine-tuning efficient?",
+    "expected_topics": ["parameter-efficient fine-tuning (PEFT)", "rank decomposition", "frozen weights", "VRAM reduction"]
+  },
+  {
+    "id": "q_109",
+    "role": ["AI Engineer"],
+    "tags": ["ai-agents", "langchain"],
+    "difficulty": "medium",
+    "question": "How do you design an AI agent that can use external tools?",
+    "expected_topics": ["ReAct framework", "function calling", "memory", "LangChain/LlamaIndex"]
+  },
+  {
+    "id": "q_110",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "evaluation"],
+    "difficulty": "hard",
+    "question": "How do you evaluate the output quality of an LLM in a production setting?",
+    "expected_topics": ["LLM-as-a-judge", "BLEU/ROUGE limitations", "human-in-the-loop", "ground truth datasets"]
+  },
+  {
+    "id": "q_111",
+    "role": ["AI Engineer"],
+    "tags": ["vector-databases", "search"],
+    "difficulty": "medium",
+    "question": "How does cosine similarity work in the context of semantic search?",
+    "expected_topics": ["vector embeddings", "dot product", "magnitude", "distance metrics"]
+  },
+  {
+    "id": "q_112",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "context-window"],
+    "difficulty": "medium",
+    "question": "What strategies do you use when the context window of an LLM is exceeded?",
+    "expected_topics": ["summarization chains", "chunking", "RAG", "hierarchical retrieval"]
+  },
+  {
+    "id": "q_113",
+    "role": ["AI Engineer"],
+    "tags": ["ai-ethics", "bias"],
+    "difficulty": "medium",
+    "question": "How do you identify and mitigate bias in generative AI models?",
+    "expected_topics": ["dataset curation", "red teaming", "constitutional AI", "guardrails"]
+  },
+  {
+    "id": "q_114",
+    "role": ["AI Engineer"],
+    "tags": ["audio-processing", "speech-to-text"],
+    "difficulty": "hard",
+    "question": "How do modern transformer-based ASR (Automatic Speech Recognition) models like Whisper work?",
+    "expected_topics": ["spectrograms", "encoder-decoder architecture", "multilingual training", "alignment"]
+  },
+  {
+    "id": "q_115",
+    "role": ["AI Engineer"],
+    "tags": ["computer-vision", "diffusion-models"],
+    "difficulty": "hard",
+    "question": "Explain the fundamental concepts behind diffusion models used for image generation.",
+    "expected_topics": ["forward noise process", "reverse denoising process", "U-Net", "latent space"]
+  },
+  {
+    "id": "q_116",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "security"],
+    "difficulty": "medium",
+    "question": "What is prompt injection and how can you protect an AI application against it?",
+    "expected_topics": ["jailbreaking", "input sanitization", "system prompts", "LLM firewalls"]
+  },
+  {
+    "id": "q_117",
+    "role": ["AI Engineer"],
+    "tags": ["optimization", "quantization"],
+    "difficulty": "hard",
+    "question": "Explain INT8 and FP4 quantization and their impact on LLM performance.",
+    "expected_topics": ["precision loss", "inference speed", "memory bandwidth", "activation vs weight quantization"]
+  },
+  {
+    "id": "q_118",
+    "role": ["AI Engineer"],
+    "tags": ["llms", "architecture"],
+    "difficulty": "hard",
+    "question": "What is Mixture of Experts (MoE) in the context of large language models?",
+    "expected_topics": ["routing networks", "sparse activation", "parameter scaling", "expert specialization"]
+  },
+  {
+    "id": "q_119",
+    "role": ["AI Engineer"],
+    "tags": ["reinforcement-learning", "rlhf"],
+    "difficulty": "hard",
+    "question": "How does Reinforcement Learning from Human Feedback (RLHF) align LLMs with human intent?",
+    "expected_topics": ["reward model", "PPO (Proximal Policy Optimization)", "preference ranking", "KL divergence"]
+  },
+  {
+    "id": "q_120",
+    "role": ["AI Engineer"],
+    "tags": ["ai-agents", "memory"],
+    "difficulty": "medium",
+    "question": "How do you implement long-term memory in an autonomous AI agent?",
+    "expected_topics": ["vector stores", "graph databases", "summarization", "episodic memory"]
+  },
+  {
+    "id": "q_121",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["cryptography", "encryption"],
+    "difficulty": "easy",
+    "question": "What is the difference between symmetric and asymmetric encryption?",
+    "expected_topics": ["public/private keys", "shared secret", "AES vs RSA", "key exchange"]
+  },
+  {
+    "id": "q_122",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["network-security", "firewalls"],
+    "difficulty": "medium",
+    "question": "Explain the difference between a Stateful Firewall and a Next-Generation Firewall (NGFW).",
+    "expected_topics": ["connection tracking", "deep packet inspection", "intrusion prevention", "application awareness"]
+  },
+  {
+    "id": "q_123",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["web-security", "oauth"],
+    "difficulty": "hard",
+    "question": "What are common security vulnerabilities in an OAuth 2.0 implementation?",
+    "expected_topics": ["open redirect", "CSRF", "improper state validation", "token leakage"]
+  },
+  {
+    "id": "q_124",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["incident-response", "forensics"],
+    "difficulty": "medium",
+    "question": "What is the chain of custody in digital forensics and why is it crucial?",
+    "expected_topics": ["evidence integrity", "legal admissibility", "documentation", "hash values"]
+  },
+  {
+    "id": "q_125",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["vulnerability-management", "cvss"],
+    "difficulty": "easy",
+    "question": "How do you prioritize patching vulnerabilities when multiple critical CVSS scores exist?",
+    "expected_topics": ["exploitability", "asset criticality", "compensating controls", "threat intelligence"]
+  },
+  {
+    "id": "q_126",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["architecture", "zero-trust"],
+    "difficulty": "medium",
+    "question": "Explain the Zero Trust security model.",
+    "expected_topics": ["never trust, always verify", "identity and access management", "micro-segmentation", "continuous authentication"]
+  },
+  {
+    "id": "q_127",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["cryptography", "hashing"],
+    "difficulty": "medium",
+    "question": "Why is MD5 considered insecure for hashing passwords, and what should be used instead?",
+    "expected_topics": ["collision vulnerability", "rainbow tables", "bcrypt", "salting"]
+  },
+  {
+    "id": "q_128",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["network-security", "ddos"],
+    "difficulty": "medium",
+    "question": "How do you mitigate a volumetric DDoS attack?",
+    "expected_topics": ["rate limiting", "Anycast routing", "Web Application Firewall (WAF)", "traffic scrubbing"]
+  },
+  {
+    "id": "q_129",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["malware", "analysis"],
+    "difficulty": "hard",
+    "question": "What is the difference between static and dynamic malware analysis?",
+    "expected_topics": ["reverse engineering", "sandboxing", "code obfuscation", "behavioral monitoring"]
+  },
+  {
+    "id": "q_130",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["cloud-security", "aws"],
+    "difficulty": "hard",
+    "question": "How do you secure an AWS S3 bucket containing sensitive PII?",
+    "expected_topics": ["block public access", "bucket policies", "KMS encryption", "Macie", "access logging"]
+  },
+  {
+    "id": "q_131",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["penetration-testing", "methodology"],
+    "difficulty": "medium",
+    "question": "Walk me through the phases of a penetration test.",
+    "expected_topics": ["reconnaissance", "scanning", "exploitation", "post-exploitation", "reporting"]
+  },
+  {
+    "id": "q_132",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["iam", "active-directory"],
+    "difficulty": "hard",
+    "question": "What is a Pass-the-Hash attack and how can it be prevented?",
+    "expected_topics": ["NTLM hashes", "credential dumping", "mimikatz", "LAPS", "Restricted Admin mode"]
+  },
+  {
+    "id": "q_133",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["compliance", "soc2"],
+    "difficulty": "easy",
+    "question": "What is the difference between a SOC 2 Type I and Type II report?",
+    "expected_topics": ["point in time vs period of time", "design vs operating effectiveness", "auditing"]
+  },
+  {
+    "id": "q_134",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["web-security", "ssrf"],
+    "difficulty": "hard",
+    "question": "Explain Server-Side Request Forgery (SSRF) and how an attacker uses it to access internal metadata.",
+    "expected_topics": ["cloud metadata API (169.254.169.254)", "input validation", "allowlists", "network segmentation"]
+  },
+  {
+    "id": "q_135",
+    "role": ["Cybersecurity Engineer"],
+    "tags": ["endpoint-security", "edr"],
+    "difficulty": "medium",
+    "question": "How does EDR (Endpoint Detection and Response) differ from traditional Antivirus?",
+    "expected_topics": ["behavioral analysis", "signature-based vs anomaly-based", "telemetry collection", "threat hunting"]
+  },
+  {
+    "id": "q_136",
+    "role": ["Cloud Engineer"],
+    "tags": ["architecture", "serverless"],
+    "difficulty": "easy",
+    "question": "What are the advantages and disadvantages of serverless computing?",
+    "expected_topics": ["auto-scaling", "cost efficiency", "cold starts", "vendor lock-in"]
+  },
+  {
+    "id": "q_137",
+    "role": ["Cloud Engineer"],
+    "tags": ["storage", "object-storage"],
+    "difficulty": "medium",
+    "question": "Compare Object Storage, Block Storage, and File Storage in the cloud.",
+    "expected_topics": ["S3 vs EBS vs EFS", "metadata", "latency", "use cases"]
+  },
+  {
+    "id": "q_138",
+    "role": ["Cloud Engineer"],
+    "tags": ["networking", "vpc"],
+    "difficulty": "medium",
+    "question": "What is VPC Peering and what are its limitations?",
+    "expected_topics": ["non-overlapping CIDRs", "transitive routing", "cross-region support", "network latency"]
+  },
+  {
+    "id": "q_139",
+    "role": ["Cloud Engineer"],
+    "tags": ["cost-optimization", "finops"],
+    "difficulty": "medium",
+    "question": "How do you identify and eliminate cloud waste in an AWS/Azure environment?",
+    "expected_topics": ["unattached volumes", "idle instances", "Reserved Instances / Savings Plans", "right-sizing"]
+  },
+  {
+    "id": "q_140",
+    "role": ["Cloud Engineer"],
+    "tags": ["compute", "auto-scaling"],
+    "difficulty": "hard",
+    "question": "How do you design a predictive auto-scaling strategy for spiky traffic?",
+    "expected_topics": ["scheduled scaling", "custom metrics", "cooldown periods", "machine learning predictions"]
+  },
+  {
+    "id": "q_141",
+    "role": ["Cloud Engineer"],
+    "tags": ["databases", "managed-services"],
+    "difficulty": "medium",
+    "question": "When would you choose a managed database service (e.g., RDS) over hosting it on an EC2 instance?",
+    "expected_topics": ["automated backups", "patch management", "multi-AZ deployment", "administrative overhead"]
+  },
+  {
+    "id": "q_142",
+    "role": ["Cloud Engineer"],
+    "tags": ["security", "iam"],
+    "difficulty": "hard",
+    "question": "How do you securely manage cross-account access in AWS?",
+    "expected_topics": ["IAM Roles", "assume role", "trust policies", "AWS Organizations"]
+  },
+  {
+    "id": "q_143",
+    "role": ["Cloud Engineer"],
+    "tags": ["disaster-recovery", "rto-rpo"],
+    "difficulty": "medium",
+    "question": "Explain RTO and RPO in the context of cloud disaster recovery.",
+    "expected_topics": ["Recovery Time Objective", "Recovery Point Objective", "backup frequency", "downtime tolerance"]
+  },
+  {
+    "id": "q_144",
+    "role": ["Cloud Engineer"],
+    "tags": ["networking", "cdn"],
+    "difficulty": "easy",
+    "question": "How does a Content Delivery Network (CDN) improve application performance?",
+    "expected_topics": ["edge locations", "caching static assets", "latency reduction", "origin offload"]
+  },
+  {
+    "id": "q_145",
+    "role": ["Cloud Engineer"],
+    "tags": ["iac", "cloudformation"],
+    "difficulty": "medium",
+    "question": "What is the difference between AWS CloudFormation and Terraform?",
+    "expected_topics": ["vendor lock-in", "HCL vs JSON/YAML", "state management", "multi-cloud support"]
+  },
+  {
+    "id": "q_146",
+    "role": ["Cloud Engineer"],
+    "tags": ["serverless", "api-gateway"],
+    "difficulty": "medium",
+    "question": "How do you secure a serverless API endpoint deployed via API Gateway?",
+    "expected_topics": ["Lambda authorizers", "Cognito", "API keys", "WAF integration"]
+  },
+  {
+    "id": "q_147",
+    "role": ["Cloud Engineer"],
+    "tags": ["migration", "strategies"],
+    "difficulty": "hard",
+    "question": "Describe the 6 R's of cloud migration. Which one is the most complex?",
+    "expected_topics": ["Rehost", "Replatform", "Refactor/Rearchitect", "Repurchase", "Retain", "Retire"]
+  },
+  {
+    "id": "q_148",
+    "role": ["Cloud Engineer"],
+    "tags": ["compute", "containers"],
+    "difficulty": "medium",
+    "question": "What are the trade-offs between AWS Fargate and EC2 for running ECS containers?",
+    "expected_topics": ["serverless compute", "host management", "pricing models", "granular control"]
+  },
+  {
+    "id": "q_149",
+    "role": ["Cloud Engineer"],
+    "tags": ["messaging", "sns-sqs"],
+    "difficulty": "medium",
+    "question": "Explain the Fanout pattern using SNS and SQS.",
+    "expected_topics": ["pub/sub", "message durability", "parallel processing", "decoupling"]
+  },
+  {
+    "id": "q_150",
+    "role": ["Cloud Engineer"],
+    "tags": ["observability", "tracing"],
+    "difficulty": "hard",
+    "question": "How do you trace a request across a distributed microservices architecture in the cloud?",
+    "expected_topics": ["distributed tracing", "correlation IDs", "AWS X-Ray", "OpenTelemetry"]
+  },
+  {
+    "id": "q_151",
+    "role": ["QA Engineer"],
+    "tags": ["testing", "pyramid"],
+    "difficulty": "easy",
+    "question": "What is the Testing Pyramid?",
+    "expected_topics": ["unit tests", "integration tests", "UI/E2E tests", "execution speed vs cost"]
+  },
+  {
+    "id": "q_152",
+    "role": ["QA Engineer"],
+    "tags": ["automation", "selenium"],
+    "difficulty": "medium",
+    "question": "How do you handle dynamic web elements (like popups) in Selenium?",
+    "expected_topics": ["explicit waits", "implicit waits", "locators strategies", "WebDriverWait"]
+  },
+  {
+    "id": "q_153",
+    "role": ["QA Engineer"],
+    "tags": ["api-testing", "postman"],
+    "difficulty": "medium",
+    "question": "How do you validate the schema and response payload of a REST API?",
+    "expected_topics": ["JSON schema validation", "status codes", "assertions", "Postman scripts"]
+  },
+  {
+    "id": "q_154",
+    "role": ["QA Engineer"],
+    "tags": ["performance-testing", "jmeter"],
+    "difficulty": "hard",
+    "question": "What is the difference between load testing, stress testing, and endurance testing?",
+    "expected_topics": ["expected load", "breaking point", "memory leaks over time", "scalability"]
+  },
+  {
+    "id": "q_155",
+    "role": ["QA Engineer"],
+    "tags": ["methodology", "bdd"],
+    "difficulty": "medium",
+    "question": "Explain Behavior-Driven Development (BDD) and how you implement it.",
+    "expected_topics": ["Cucumber", "Gherkin syntax", "Given-When-Then", "collaboration"]
+  },
+  {
+    "id": "q_156",
+    "role": ["QA Engineer"],
+    "tags": ["defect-management", "lifecycle"],
+    "difficulty": "easy",
+    "question": "Describe the bug lifecycle from discovery to closure.",
+    "expected_topics": ["new", "assigned", "fixed", "verified", "reopened", "closed"]
+  },
+  {
+    "id": "q_157",
+    "role": ["QA Engineer"],
+    "tags": ["automation", "flaky-tests"],
+    "difficulty": "hard",
+    "question": "How do you identify and fix flaky automated UI tests?",
+    "expected_topics": ["timing issues", "test isolation", "environmental factors", "retry logic"]
+  },
+  {
+    "id": "q_158",
+    "role": ["QA Engineer"],
+    "tags": ["security-testing", "owasp"],
+    "difficulty": "medium",
+    "question": "What are the OWASP Top 10, and how do you incorporate them into QA?",
+    "expected_topics": ["injection", "broken authentication", "DAST tools", "security regression"]
+  },
+  {
+    "id": "q_159",
+    "role": ["QA Engineer"],
+    "tags": ["ci-cd", "integration"],
+    "difficulty": "medium",
+    "question": "How do you integrate automated test suites into a CI/CD pipeline?",
+    "expected_topics": ["Jenkins/GitHub Actions", "parallel execution", "build breaking rules", "reporting artifacts"]
+  },
+  {
+    "id": "q_160",
+    "role": ["QA Engineer"],
+    "tags": ["test-design", "boundary-value"],
+    "difficulty": "easy",
+    "question": "What is Boundary Value Analysis and Equivalence Partitioning?",
+    "expected_topics": ["test case reduction", "edge cases", "valid vs invalid inputs"]
+  },
+  {
+    "id": "q_161",
+    "role": ["QA Engineer"],
+    "tags": ["mobile-testing", "appium"],
+    "difficulty": "medium",
+    "question": "What are the challenges of mobile app testing compared to web testing?",
+    "expected_topics": ["device fragmentation", "OS versions", "network conditions", "battery consumption"]
+  },
+  {
+    "id": "q_162",
+    "role": ["QA Engineer"],
+    "tags": ["database-testing", "sql"],
+    "difficulty": "medium",
+    "question": "How do you perform database testing to verify frontend actions?",
+    "expected_topics": ["CRUD validation", "data integrity", "SQL joins", "state verification"]
+  },
+  {
+    "id": "q_163",
+    "role": ["QA Engineer"],
+    "tags": ["accessibility-testing", "wcag"],
+    "difficulty": "medium",
+    "question": "How do you test a web application for WCAG compliance?",
+    "expected_topics": ["screen readers", "keyboard navigation", "automated tools (Axe)", "color contrast"]
+  },
+  {
+    "id": "q_164",
+    "role": ["QA Engineer"],
+    "tags": ["test-strategy", "risk-based"],
+    "difficulty": "hard",
+    "question": "How do you implement a risk-based testing strategy under a tight deadline?",
+    "expected_topics": ["impact vs likelihood", "critical business flows", "test prioritization", "stakeholder communication"]
+  },
+  {
+    "id": "q_165",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["c-programming", "pointers"],
+    "difficulty": "medium",
+    "question": "What does the 'volatile' keyword do in C, and when should you use it?",
+    "expected_topics": ["compiler optimization", "memory-mapped I/O", "interrupt service routines", "shared variables"]
+  },
+  {
+    "id": "q_166",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["microcontrollers", "interrupts"],
+    "difficulty": "medium",
+    "question": "Explain the difference between polling and interrupts.",
+    "expected_topics": ["CPU utilization", "latency", "context switching", "hardware triggers"]
+  },
+  {
+    "id": "q_167",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["communication-protocols", "i2c-spi"],
+    "difficulty": "hard",
+    "question": "Compare I2C, SPI, and UART protocols.",
+    "expected_topics": ["synchronous vs asynchronous", "full-duplex vs half-duplex", "number of pins", "multi-master support"]
+  },
+  {
+    "id": "q_168",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["memory", "heap-stack"],
+    "difficulty": "medium",
+    "question": "Why is dynamic memory allocation (malloc/free) generally avoided in embedded systems?",
+    "expected_topics": ["memory fragmentation", "deterministic behavior", "heap exhaustion", "memory leaks"]
+  },
+  {
+    "id": "q_169",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["rtos", "concurrency"],
+    "difficulty": "hard",
+    "question": "What is priority inversion in an RTOS and how do you solve it?",
+    "expected_topics": ["mutexes", "priority inheritance protocol", "priority ceiling", "deadlocks"]
+  },
+  {
+    "id": "q_170",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["hardware", "watchdog"],
+    "difficulty": "easy",
+    "question": "What is a Watchdog Timer and why is it essential?",
+    "expected_topics": ["system lockups", "kicking/feeding the dog", "hardware reset", "fail-safe"]
+  },
+  {
+    "id": "q_171",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["architecture", "bootloader"],
+    "difficulty": "medium",
+    "question": "How does a bootloader work in an embedded system?",
+    "expected_topics": ["hardware initialization", "vector table mapping", "OTA updates", "jumping to main"]
+  },
+  {
+    "id": "q_172",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["c-programming", "bit-manipulation"],
+    "difficulty": "easy",
+    "question": "Write a C macro to set, clear, and toggle a specific bit in a register.",
+    "expected_topics": ["bitwise OR", "bitwise AND", "bitwise XOR", "bit shifting"]
+  },
+  {
+    "id": "q_173",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["power-management", "sleep-modes"],
+    "difficulty": "medium",
+    "question": "How do you optimize an embedded system for low power consumption?",
+    "expected_topics": ["sleep/deep-sleep modes", "clock gating", "interrupt-driven wakeups", "peripheral power down"]
+  },
+  {
+    "id": "q_174",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["rtos", "semaphores"],
+    "difficulty": "medium",
+    "question": "What is the difference between a binary semaphore and a mutex?",
+    "expected_topics": ["ownership", "signaling vs locking", "priority inheritance", "interrupt contexts"]
+  },
+  {
+    "id": "q_175",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["hardware", "adc"],
+    "difficulty": "medium",
+    "question": "Explain the Nyquist-Shannon sampling theorem and its relevance to ADC.",
+    "expected_topics": ["sampling rate", "aliasing", "low-pass filters", "analog-to-digital conversion"]
+  },
+  {
+    "id": "q_176",
+    "role": ["Embedded Systems Engineer"],
+    "tags": ["debugging", "jtag"],
+    "difficulty": "hard",
+    "question": "How do you debug a hard fault on an ARM Cortex-M microcontroller?",
+    "expected_topics": ["fault registers", "program counter (PC)", "link register (LR)", "stack unwinding"]
+  },
+  {
+    "id": "q_177",
+    "role": ["Network Engineer"],
+    "tags": ["osi-model", "fundamentals"],
+    "difficulty": "easy",
+    "question": "Explain the 7 layers of the OSI model.",
+    "expected_topics": ["Physical", "Data Link", "Network", "Transport", "Session", "Presentation", "Application"]
+  },
+  {
+    "id": "q_178",
+    "role": ["Network Engineer"],
+    "tags": ["routing", "bgp"],
+    "difficulty": "hard",
+    "question": "How does BGP (Border Gateway Protocol) make routing decisions?",
+    "expected_topics": ["path vector protocol", "AS numbers", "attributes (Weight, Local Pref, AS-Path)", "ebgp vs ibgp"]
+  },
+  {
+    "id": "q_179",
+    "role": ["Network Engineer"],
+    "tags": ["protocols", "tcp-udp"],
+    "difficulty": "medium",
+    "question": "Compare TCP and UDP. When would you use UDP over TCP?",
+    "expected_topics": ["connection-oriented vs connectionless", "reliability", "overhead", "real-time streaming/VoIP"]
+  },
+  {
+    "id": "q_180",
+    "role": ["Network Engineer"],
+    "tags": ["switching", "vlan"],
+    "difficulty": "medium",
+    "question": "What is a VLAN and how does IEEE 802.1Q trunking work?",
+    "expected_topics": ["broadcast domains", "VLAN tagging", "access vs trunk ports", "native VLAN"]
+  },
+  {
+    "id": "q_181",
+    "role": ["Network Engineer"],
+    "tags": ["routing", "ospf"],
+    "difficulty": "medium",
+    "question": "Explain the OSPF concept of areas and the role of the backbone area.",
+    "expected_topics": ["link-state protocol", "Area 0", "ABR", "routing table reduction"]
+  },
+  {
+    "id": "q_182",
+    "role": ["Network Engineer"],
+    "tags": ["fundamentals", "subnetting"],
+    "difficulty": "medium",
+    "question": "Given the IP address 192.168.1.0/26, how many usable host addresses are available per subnet?",
+    "expected_topics": ["CIDR notation", "network address", "broadcast address", "formula 2^n - 2"]
+  },
+  {
+    "id": "q_183",
+    "role": ["Network Engineer"],
+    "tags": ["security", "vpn"],
+    "difficulty": "hard",
+    "question": "Explain the phases of an IPsec VPN negotiation.",
+    "expected_topics": ["IKE Phase 1 (ISAKMP)", "IKE Phase 2 (IPsec SA)", "Diffie-Hellman", "ESP/AH"]
+  },
+  {
+    "id": "q_184",
+    "role": ["Network Engineer"],
+    "tags": ["troubleshooting", "tools"],
+    "difficulty": "easy",
+    "question": "What is the difference between ping and traceroute?",
+    "expected_topics": ["ICMP Echo Request/Reply", "TTL manipulation", "path discovery", "latency measurement"]
+  },
+  {
+    "id": "q_185",
+    "role": ["Network Engineer"],
+    "tags": ["services", "dhcp"],
+    "difficulty": "medium",
+    "question": "Walk me through the DHCP DORA process.",
+    "expected_topics": ["Discover", "Offer", "Request", "Acknowledge", "broadcast vs unicast"]
+  },
+  {
+    "id": "q_186",
+    "role": ["Network Engineer"],
+    "tags": ["switching", "stp"],
+    "difficulty": "hard",
+    "question": "How does Spanning Tree Protocol (STP) prevent network loops?",
+    "expected_topics": ["root bridge election", "BPDU", "port states (blocking, listening, learning, forwarding)", "RSTP"]
+  },
+  {
+    "id": "q_187",
+    "role": ["Network Engineer"],
+    "tags": ["architecture", "sd-wan"],
+    "difficulty": "medium",
+    "question": "What are the benefits of SD-WAN over traditional MPLS networks?",
+    "expected_topics": ["centralized management", "cost reduction", "transport independence", "application-aware routing"]
+  },
+  {
+    "id": "q_188",
+    "role": ["Network Engineer"],
+    "tags": ["services", "nat"],
+    "difficulty": "easy",
+    "question": "What is NAT and PAT, and why are they used?",
+    "expected_topics": ["IPv4 exhaustion", "private to public mapping", "port overloading", "security by obfuscation"]
+  },
+  {
+    "id": "q_189",
+    "role": ["Database Administrator"],
+    "tags": ["performance", "indexing"],
+    "difficulty": "medium",
+    "question": "What is the difference between a clustered and a non-clustered index?",
+    "expected_topics": ["physical sorting", "leaf nodes", "lookup overhead", "one per table limit"]
+  },
+  {
+    "id": "q_190",
+    "role": ["Database Administrator"],
+    "tags": ["troubleshooting", "deadlocks"],
+    "difficulty": "hard",
+    "question": "How do you detect and resolve deadlocks in SQL Server / PostgreSQL?",
+    "expected_topics": ["deadlock trace flags", "query rewriting", "index optimization", "transaction order"]
+  },
+  {
+    "id": "q_191",
+    "role": ["Database Administrator"],
+    "tags": ["backup", "recovery"],
+    "difficulty": "medium",
+    "question": "Explain the difference between Full, Differential, and Transaction Log backups.",
+    "expected_topics": ["restore chain", "point-in-time recovery", "backup size", "execution time"]
+  },
+  {
+    "id": "q_192",
+    "role": ["Database Administrator"],
+    "tags": ["architecture", "replication"],
+    "difficulty": "hard",
+    "question": "What are the pros and cons of synchronous vs asynchronous database replication?",
+    "expected_topics": ["data loss (RPO)", "commit latency", "read replicas", "failover guarantees"]
+  },
+  {
+    "id": "q_193",
+    "role": ["Database Administrator"],
+    "tags": ["performance", "execution-plans"],
+    "difficulty": "medium",
+    "question": "How do you read a query execution plan to identify a performance bottleneck?",
+    "expected_topics": ["table scans vs index seeks", "nested loops", "hash matches", "missing statistics"]
+  },
+  {
+    "id": "q_194",
+    "role": ["Database Administrator"],
+    "tags": ["design", "normalization"],
+    "difficulty": "easy",
+    "question": "Explain the first three normal forms (1NF, 2NF, 3NF) in database design.",
+    "expected_topics": ["atomic values", "partial dependencies", "transitive dependencies", "data redundancy"]
+  },
+  {
+    "id": "q_195",
+    "role": ["Database Administrator"],
+    "tags": ["concurrency", "isolation-levels"],
+    "difficulty": "hard",
+    "question": "What are the different transaction isolation levels and what anomalies do they prevent?",
+    "expected_topics": ["Read Uncommitted", "Read Committed", "Repeatable Read", "Serializable", "phantom reads", "dirty reads"]
+  },
+  {
+    "id": "q_196",
+    "role": ["Database Administrator"],
+    "tags": ["maintenance", "fragmentation"],
+    "difficulty": "medium",
+    "question": "How do you handle index fragmentation?",
+    "expected_topics": ["index reorganize vs index rebuild", "fill factor", "page splitting", "maintenance plans"]
+  },
+  {
+    "id": "q_197",
+    "role": ["Database Administrator"],
+    "tags": ["high-availability", "clustering"],
+    "difficulty": "medium",
+    "question": "What is the difference between active-active and active-passive database clustering?",
+    "expected_topics": ["load balancing", "failover time", "split-brain", "resource utilization"]
+  },
+  {
+    "id": "q_198",
+    "role": ["Database Administrator"],
+    "tags": ["security", "encryption"],
+    "difficulty": "medium",
+    "question": "How do you secure data at rest and data in transit in a database environment?",
+    "expected_topics": ["Transparent Data Encryption (TDE)", "TLS/SSL", "column-level encryption", "key management"]
+  },
+  {
+    "id": "q_199",
+    "role": ["Database Administrator"],
+    "tags": ["scaling", "sharding"],
+    "difficulty": "hard",
+    "question": "What is database sharding and what are its main challenges?",
+    "expected_topics": ["horizontal partitioning", "shard key selection", "cross-shard joins", "data rebalancing"]
+  },
+  {
+    "id": "q_200",
+    "role": ["Database Administrator"],
+    "tags": ["troubleshooting", "tempdb"],
+    "difficulty": "medium",
+    "question": "What causes TempDB/temporary tablespace contention and how do you mitigate it?",
+    "expected_topics": ["sorting operations", "temporary tables", "multiple data files", "spill to disk"]
+  }
+]
