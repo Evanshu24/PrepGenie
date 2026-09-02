@@ -1,0 +1,1 @@
+from .ddgfetcher import DuckDuckGoFetcher
