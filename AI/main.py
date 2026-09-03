@@ -56,5 +56,5 @@ def respond(payload: ResponsRequest):
         question_text = evaluation.followup_question
     else:
         question_text = result["current_question"]["question"]
-
+    print(result)
     return {"question": question_text}
