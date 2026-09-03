@@ -11,3 +11,4 @@ langchain_openai
 langchain_huggingface
 pymongo
 fastapi
+uvicorn

@@ -50,4 +50,11 @@ def respond(payload: ResponsRequest):
     state = graph.get_state(config)
     if state.next == ():
         return {"status": "ended", "evaluation": result.get("evaluation")}
-    return {"question": result["current_question"]}
+
+    evaluation = result.get("evaluation")
+    if evaluation is not None and evaluation.status == "followup":
+        question_text = evaluation.followup_question
+    else:
+        question_text = result["current_question"]["question"]
+
+    return {"question": question_text}

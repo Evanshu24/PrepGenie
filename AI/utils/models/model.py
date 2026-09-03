@@ -5,9 +5,11 @@ load_dotenv()
 
 print("[DEBUG] GOOGLE_API_KEY loaded:", bool(os.getenv("GOOGLE_API_KEY")))
 print("[DEBUG] OPENAI_API_KEY loaded:", bool(os.getenv("OPENAI_API_KEY")))
+print("[DEBUG] GROQ_API_KEY loaded:", bool(os.getenv("GROQ_API_KEY")))
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 
 # from langchain_openai import ChatOpenAI
 
@@ -40,18 +42,28 @@ print(
 
 
 # ============================================================
-# Agent Model — Google Gemini (Free Tier)
+# Agent Model
 # ============================================================
 
-agent_model_name = "gemini-3.6-flash"
+agent_model_name = "openai/gpt-oss-safeguard-20b"
 
-agent_model = ChatGoogleGenerativeAI(
+agent_model = ChatGroq(
     model=agent_model_name,
     temperature=0.4,
-    max_output_tokens=2048,
+    max_tokens=2048,
 )
 
 print(f"[DEBUG][models.py] Agent model loaded: " f"model={agent_model_name}")
+
+# agent_model_name = "gemini-3.6-flash"
+#
+# agent_model = ChatGoogleGenerativeAI(
+#     model=agent_model_name,
+#     temperature=0.4,
+#     max_output_tokens=2048,
+# )
+#
+# print(f"[DEBUG][models.py] Agent model loaded: " f"model={agent_model_name}")
 
 
 # interview_model_repo = "deepseek-ai/DeepSeek-V4-Flash-0731"
