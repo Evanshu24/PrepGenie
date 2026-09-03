@@ -9,5 +9,11 @@ bs4
 langchain_google_genai
 langchain_openai
 langchain_huggingface
+langchain_groq
 pymongo
 fastapi
+gTTS
+SpeechRecognition
+pydub
+# ffmpeg
+python-multipart
