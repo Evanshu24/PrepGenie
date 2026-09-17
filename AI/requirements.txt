@@ -15,6 +15,7 @@ fastapi
 gTTS
 SpeechRecognition
 pydub
+openai-whisper
 # ffmpeg
 python-multipart
 uvicorn

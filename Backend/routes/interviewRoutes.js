@@ -1,10 +1,12 @@
 import express from "express";
-import {Dashboard,createInterview} from "../controllers/interviewController.js";
+import {Dashboard,startInterview,respondInterview} from "../controllers/interviewController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import uploadInterviewAudio from "../middleware/interviewAudioMiddleware.js";
 
 const router = express.Router();
 
 router.get("/dashboard",authMiddleware,Dashboard);
-router.post("/createInterview",authMiddleware,createInterview);
+router.post("/startInterview",authMiddleware,startInterview);
+router.post("/respondInterview",authMiddleware,uploadInterviewAudio.single("audio"),respondInterview);
 
 export default router;

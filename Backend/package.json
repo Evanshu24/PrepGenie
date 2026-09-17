@@ -19,7 +19,8 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.24.2",
-    "multer": "^2.2.0"
+    "multer": "^2.2.0",
+    "openai": "^7.15.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

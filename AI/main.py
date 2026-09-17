@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Form
 from langgraph.types import Command
 from pydantic import BaseModel
 from typing import List
 import uuid
+import whisper
+import tempfile
+import os
 from app import graph
 from utils.state import BaseMessages
 from langchain_core.runnables import RunnableConfig
@@ -15,15 +18,11 @@ import shutil
 
 app = FastAPI()
 
+whisper_model = whisper.load_model("base.en")
 
 class StartRequest(BaseModel):
     role: str
     keywords: List[str] = []
-
-
-class ResponsRequest(BaseModel):
-    thread_id: str
-    answer: str
 
 
 @app.post("/interview/start")
@@ -49,21 +48,34 @@ def start_interview(payload: StartRequest):
 
 
 @app.post("/interview/respond")
-def respond(payload: ResponsRequest):
-    config: RunnableConfig = {"configurable": {"thread_id": payload.thread_id}}
-    result = graph.invoke(Command(resume=payload.answer), config=config)
+def respond(thread_id: str = Form(...),audio: UploadFile = File(...)):
+    config: RunnableConfig = {"configurable": {"thread_id": thread_id}}
+    
+    state = graph.get_state(config)
+    
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp:
+        temp.write(audio.file.read())
+        temp_path = temp.name
+    
+    whisper_result = whisper_model.transcribe(temp_path)
+    transcript = whisper_result["text"]
+    
+    os.remove(temp_path)
+    print("TRANSCRIPT:", transcript)
+    
+    result = graph.invoke(Command(resume=transcript), config=config)
 
     state = graph.get_state(config)
     if state.next == ():
-        return {"status": "ended", "evaluation": result.get("evaluation")}
+        print(result.get("evaluation"))
+        return {"status": "ended", "evaluation": result.get("evaluation"), "transcript": transcript}
 
     evaluation = result.get("evaluation")
     if evaluation is not None and evaluation.status == "followup":
         question_text = evaluation.followup_question
     else:
         question_text = result["current_question"]["question"]
-    return {"question": question_text}
-
+    return {"status": "continue","transcript":transcript, "question": question_text}
 
 @app.post("/interview/tts")
 def get_question_audio(text: str):

@@ -264,7 +264,7 @@ export default function Dashboard() {
             </div>
         );
     }
-    console.log(dashboardData);
+    console.log(LoginToken);
     return (
         <>
             <div className="bg-gradient-to-l from-[#a2b5de] to-[#EFF6FF] min-h-screen">
@@ -400,7 +400,7 @@ export default function Dashboard() {
                                 <div className="px-6 py-4">Date</div>
                             </div>
                             {
-                                dashboardData?.interviewList.filter((interview) => (!selectedRole || interview.role === selectedRole) && (!selectedDifficulty || interview.difficulty === selectedDifficulty)).map((interview) => (
+                                dashboardData?.interviewList.filter((interview) => (!selectedRole || interview.role === selectedRole) && (!selectedDifficulty || interview.difficulty === selectedDifficulty)).slice(0,3).map((interview) => (
 
                                     <div className="grid grid-cols-5 border-t border-gray-200 cursor-pointer" key={interview._id}>
                                         <div className="px-6 py-4">{interview.role}</div>

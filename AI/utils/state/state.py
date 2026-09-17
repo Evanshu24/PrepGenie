@@ -4,6 +4,17 @@ from langchain_core.messages import BaseMessage
 from utils.llm import EvaluationResult
 
 
+class Question(TypedDict):
+    id: str
+    question: str
+    difficulty: str
+
+
+class ReferenceAnswer(TypedDict):
+    answer: str
+    sources: List[str]
+    fetched: bool
+
 class BaseMessages(TypedDict):
     messages: Annotated[List[BaseMessage], add_messages]
     role: Annotated[str, "Role for the interview"]
@@ -27,15 +38,3 @@ class BaseMessages(TypedDict):
         int,
         "Number of follow-up questions asked for the current question.",
     ]
-
-
-class Question(TypedDict):
-    id: str
-    question: str
-    difficulty: str
-
-
-class ReferenceAnswer(TypedDict):
-    answer: str
-    sources: List[str]
-    fetched: bool

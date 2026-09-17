@@ -8,6 +8,7 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import LoggedInNavbar from './components/loggedInNavbar.jsx';
 import InterviewDetails from './Pages/InterviewDetails.jsx';
+import Interview from './Pages/Interview.jsx';
 
 function App() {
   return (
@@ -39,17 +40,19 @@ function App() {
           </>
         }
         />
-        <Route path="/extra" element={
-          <>
-            <Navbar />
 
-            <Footer />
-          </>
-        }
-        />
         <Route path="/details" element={
-          <InterviewDetails/>
+          <ProtectedRoute>
+            <InterviewDetails />
+          </ProtectedRoute>
         }/>
+      
+      <Route path="/interview" element={
+        <ProtectedRoute>
+          <Interview />
+        </ProtectedRoute>
+      }/>
+
       </Routes>
     </BrowserRouter>
   )

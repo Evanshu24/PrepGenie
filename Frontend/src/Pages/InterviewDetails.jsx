@@ -136,11 +136,11 @@ export default function InterviewDetails() {
     };
 
     const [user, setUser] = useState(null);
-
     const [selectedRole, setSelectedRole] = useState("");
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
-
+    const [loading,setLoading]= useState(true);
+    const [error,setError] = useState("");
     const resumeInputRef = useRef(null);
 
     const LoginToken = localStorage.getItem("token");
@@ -160,8 +160,10 @@ export default function InterviewDetails() {
                     console.log(data.message);
                 }
             })
-            .catch(err => console.log(err));
-
+            .catch(err => console.log(err))
+            .finally(() => {
+                setLoading(false);
+            });
     }, []);
     const viewResume = async () => {
         try {
@@ -222,7 +224,7 @@ export default function InterviewDetails() {
             }
 
         } catch (error) {
-            console.log(error);
+            console.log("Error uploading resume: ",error);
         }
     };
     const updateResume = async (e) => {
@@ -258,18 +260,64 @@ export default function InterviewDetails() {
             }
 
         } catch (error) {
-            console.error("Error posting data:", error);
+            console.error("Error updating resume: ", error);
         }
     };
 
+    const handleSubmit=async(e)=>{
+        try{
+            setError("");
+            const res=await fetch("http://localhost:5000/api/interview/startInterview",
+                {
+                    method: "POST",
+                    headers:{
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${LoginToken}`
+                    },
+                    body: JSON.stringify({
+                        role: selectedRole,
+                        difficulty: selectedDifficulty,
+                        duration: selectedDuration,
+                        keywords: ["Python","APIs","Cron"] //this is right now temporary, later I will use C++ parser to extract these from resume
+                    })
+                });
+            
+            const data = await res.json();
+            if(!res.ok){
+                setError(data.message || "Unable to start interview");
+                return ;
+            }
+            localStorage.setItem("threadId",data.threadId);
+            localStorage.setItem("interviewId",data.interviewId);
+            localStorage.setItem("questionId",data.questionId);
+            localStorage.setItem("question",JSON.stringify(data.question));
+            navigate('/interview');
+
+        }catch(error){
+            console.log("Error submit button: ",error);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                Loading user content
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                Unable to load user data,Try refreshing the page once
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-50">
-
             <main className="max-w-6xl mx-auto px-6 py-8">
-
                 <div className="mb-10">
-
                     <button
                         onClick={() => navigate("/")}
                         className="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition cursor-pointer"
@@ -389,10 +437,10 @@ export default function InterviewDetails() {
                     </div>
 
                     <div className="border-t border-slate-200 my-8" />
-                    <div className="flex justify-end">
-                        <button
-                            className="w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer">Start Interview →</button>
-                    </div>
+                        <div className="flex justify-end">
+                                <button className="w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer" onClick={handleSubmit}>Start Interview →</button>
+                        </div>
+                    {error && <div className="text-red-500 text-sm text-center mt-4 mb-0">{error}</div>}
                 </section>
             </main>
         </div>

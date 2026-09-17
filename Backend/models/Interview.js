@@ -35,6 +35,11 @@ const interviewSchema = new mongoose.Schema({
         type: String,
         enum: ["in-progress", "abandoned", "completed"],
         default: "in-progress"
+    },
+
+    threadId: {
+        type: String,
+        required: true
     }
 });
 
