@@ -6,6 +6,12 @@ import uuid
 from app import graph
 from utils.state import BaseMessages
 from langchain_core.runnables import RunnableConfig
+from fastapi import UploadFile, File
+from fastapi.responses import FileResponse
+from utils.speech_service import text_to_speech, speech_to_text
+from fastapi import HTTPException
+import os
+import shutil
 
 app = FastAPI()
 
@@ -57,3 +63,33 @@ def respond(payload: ResponsRequest):
     else:
         question_text = result["current_question"]["question"]
     return {"question": question_text}
+
+
+@app.post("/interview/tts")
+def get_question_audio(text: str):
+    target_path = os.path.join("data", "output_question.mp3")
+    
+    audio_path = text_to_speech(text, output_path=target_path)
+    return FileResponse(audio_path, media_type="audio/mpeg", filename="question.mp3")
+
+
+@app.post("/interview/stt")
+async def transcribe_answer(file: UploadFile = File(...)):
+    # Validate file extension
+    if not file.filename.lower().endswith(".wav"):
+        raise HTTPException(
+            status_code=400, 
+            detail="Invalid file format. Please upload a .wav audio file."
+        )
+
+    temp_file_path = os.path.join("data", f"temp_{file.filename}")
+    
+    with open(temp_file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+        
+    transcribed_text = speech_to_text(temp_file_path)
+    
+    if os.path.exists(temp_file_path):
+        os.remove(temp_file_path)
+        
+    return {"transcribed_answer": transcribed_text}
