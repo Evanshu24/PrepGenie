@@ -140,6 +140,7 @@ export default function InterviewDetails() {
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading,setLoading]= useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [error,setError] = useState("");
     const resumeInputRef = useRef(null);
 
@@ -267,6 +268,7 @@ export default function InterviewDetails() {
     const handleSubmit=async(e)=>{
         try{
             setError("");
+            setIsSubmitting(true);
             const res=await fetch("http://localhost:5000/api/interview/startInterview",
                 {
                     method: "POST",
@@ -295,6 +297,8 @@ export default function InterviewDetails() {
 
         }catch(error){
             console.log("Error submit button: ",error);
+        }finally{
+            setIsSubmitting(false);
         }
     };
 
@@ -346,6 +350,7 @@ export default function InterviewDetails() {
                             <label className="block text-sm font-medium text-slate-700 mb-2">Target Role</label>
                             <select
                                 value={selectedRole}
+                                disabled={isSubmitting}
                                 onChange={(e) => setSelectedRole(e.target.value)}
                                 className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
                             >
@@ -364,6 +369,7 @@ export default function InterviewDetails() {
                             <label className="block text-sm font-medium text-slate-700 mb-2">Difficulty</label>
                             <select
                                 value={selectedDifficulty}
+                                disabled={isSubmitting}
                                 onChange={(e) => setSelectedDifficulty(e.target.value)}
                                 className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
                             >
@@ -378,6 +384,7 @@ export default function InterviewDetails() {
                             <label className="block text-sm font-medium text-slate-700 mb-2">Duration</label>
                             <select
                                 value={selectedDuration}
+                                disabled={isSubmitting}
                                 onChange={(e) => setSelectedDuration(e.target.value)}
                                 className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
                             >
@@ -406,7 +413,7 @@ export default function InterviewDetails() {
                                         📄
                                     </div>
                                     <div>
-                                        <button onClick={viewResume} className="font-medium text-slate-800 hover:text-blue-600 transition cursor-pointer">
+                                        <button onClick={viewResume} disabled={isSubmitting} className="font-medium text-slate-800 hover:text-blue-600 transition cursor-pointer">
                                             {user?.resume.split("-")[1]}
                                         </button>
                                         <p className="text-sm text-slate-500 mt-1">
@@ -415,7 +422,7 @@ export default function InterviewDetails() {
                                     </div>
                                 </div>
 
-                                <button onClick={() => resumeInputRef.current.click()} className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer">
+                                <button onClick={() => resumeInputRef.current.click()} disabled={isSubmitting} className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer">
                                     Update
                                 </button>
 
@@ -438,7 +445,7 @@ export default function InterviewDetails() {
 
                     <div className="border-t border-slate-200 my-8" />
                         <div className="flex justify-end">
-                                <button className="w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer" onClick={handleSubmit}>Start Interview →</button>
+                                <button className={`w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ${isSubmitting? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleSubmit} disabled={isSubmitting}>Start Interview →</button>
                         </div>
                     {error && <div className="text-red-500 text-sm text-center mt-4 mb-0">{error}</div>}
                 </section>

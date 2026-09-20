@@ -11,6 +11,7 @@ export default function Interview() {
     const [recordingTime, setRecordingTime] = useState(0);
     const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLeaving, setIsLeaving] = useState(false);
 
     const recorderRef = useRef(null);
     const audioRecorderRef = useRef(null);
@@ -20,6 +21,7 @@ export default function Interview() {
     const recordedRef = useRef(null);
     const isRetakingRef = useRef(false);
     const recordedUrlRef = useRef(null);
+    const hasCheckedInterview = useRef(false);
     const LoginToken = localStorage.getItem("token");
     const navigate = useNavigate();
     
@@ -32,17 +34,22 @@ export default function Interview() {
     }
 
     useEffect(() => {
+        if (hasCheckedInterview.current) return;
+        hasCheckedInterview.current = true;
         const threadId = localStorage.getItem("threadId");
         const interviewId = localStorage.getItem("interviewId");
         const questionId = localStorage.getItem("questionId");
         const question = localStorage.getItem("question");
-
+        
+        if(!threadId || !interviewId || !questionId || !question) {
+            alert("Invalid interview session. Please start a new interview.");
+            navigate("/");
+            return;
+        }
         setInterview({ threadId, interviewId, questionId, question: question ? JSON.parse(question) : null });
-    }, []);
-
-    useEffect(() => {
         startCamera();
     }, []);
+
 
     useEffect(() => {
         if (videoRef.current && stream) {
@@ -200,6 +207,8 @@ export default function Interview() {
                 localStorage.removeItem("question");
                 localStorage.removeItem("interviewId");
                 localStorage.removeItem("questionId");
+                stream?.getTracks().forEach(track => track.stop());
+                setStream(null);
                 navigate("/");
                 return;
             }
@@ -250,10 +259,50 @@ export default function Interview() {
         startCamera();
     };
 
+    const handleLeaveInterview = async () =>{
+        try{
+            if (!window.confirm("Are you sure you want to leave this interview?")) {
+                return;
+            }
+            setIsLeaving(true);
+            const response = await fetch("http://localhost:5000/api/interview/abandonInterview",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${LoginToken}`
+                    },
+                    body: JSON.stringify(
+                        {interviewId: interview.interviewId}
+                    )
+                }
+            )
+            const data = await response.json();
+            if(!response.ok){
+                setError(data.message || "Unable to leave interview")
+                return ;
+            }
+            localStorage.removeItem("threadId");
+            localStorage.removeItem("question");
+            localStorage.removeItem("interviewId");
+            localStorage.removeItem("questionId");
+            stream?.getTracks().forEach(track => track.stop());
+            setStream(null);
+            navigate("/");
+        }catch(error){
+            console.log("Error leaving interview page",error);
+        }finally{
+            setIsLeaving(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-950 text-white">
             <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between">
                 <div className="text-xl font-bold">PrepGenie</div>
+                <div className="text-xl">
+                    <button className={`px-4 py-2 rounded-xl border border-red-500/50 text-red-400 hover:bg-red-500/10 transition ${isSubmitting || isLeaving? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleLeaveInterview} disabled={isSubmitting || isLeaving}>{isLeaving? "Leaving..." : "Leave Interview"}</button>
+                </div>
             </header>
             <main className="flex flex-col md:flex-row max-w-[1600px] mx-auto px-6 py-10 gap-10">
                 <div className="flex flex-1 w-full items-center justify-center px-10 py-10">
@@ -324,11 +373,11 @@ export default function Interview() {
 
                     <div className="flex flex-col items-center gap-4 mt-6">
 
-                        <button className={`px-7 py-3 rounded-xl bg-red-600 hover:bg-red-700 font-semibold transition ${isSubmitting ? "cursor-not-allowed opacity-50": "cursor-pointer"}`} onClick={handleRecordingBtn} disabled={isSubmitting}>{startButton ? "Start Recording" : "End Recording"}</button>
+                        <button className={`px-7 py-3 rounded-xl bg-red-600 hover:bg-red-700 font-semibold transition ${isSubmitting || isLeaving? "cursor-not-allowed opacity-50": "cursor-pointer"}`} onClick={handleRecordingBtn} disabled={isSubmitting || isLeaving}>{startButton ? "Start Recording" : "End Recording"}</button>
 
                         <div className="flex gap-4">
-                            <button className={`px-6 py-3 rounded-xl border border-slate-700 transition ${isSubmitting? "cursor-not-allowed opacity-50": "hover:bg-slate-800 cursor-pointer"}`} onClick={handleRetake} disabled={isSubmitting}>Retake</button>
-                            <button className={`px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 font-semibold transition ${isSubmitting ? "cursor-not-allowed opacity-50": "cursor-pointer" }`} onClick={handleSubmit} disabled={isSubmitting}>{isSubmitting ? "Submitting..." : "Submit Answer"}</button>
+                            <button className={`px-6 py-3 rounded-xl border border-slate-700 transition ${isSubmitting || isLeaving? "cursor-not-allowed opacity-50": "hover:bg-slate-800 cursor-pointer"}`} onClick={handleRetake} disabled={isSubmitting || isLeaving}>Retake</button>
+                            <button className={`px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 font-semibold transition ${isSubmitting || isLeaving ? "cursor-not-allowed opacity-50": "cursor-pointer" }`} onClick={handleSubmit} disabled={isSubmitting || isLeaving}>{isSubmitting ? "Submitting..." : "Submit Answer"}</button>
                         </div>
                     </div>
 

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx'
 import SignInPage from './Pages/SignIn.jsx'
@@ -6,9 +5,10 @@ import SignUp from './Pages/SignUp.jsx'
 import Footer from './components/Footer.jsx'
 import Dashboard from "./Pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import LoggedInNavbar from './components/loggedInNavbar.jsx';
 import InterviewDetails from './Pages/InterviewDetails.jsx';
 import Interview from './Pages/Interview.jsx';
+import AllInterviews from './Pages/AllInterviews.jsx';
+import InterviewReview from './Pages/InterviewReview.jsx';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <>
             <ProtectedRoute>
               <>
-                <LoggedInNavbar/>
+                <Navbar/>
                 <Dashboard />
                 <Footer/>
               </>
@@ -53,6 +53,20 @@ function App() {
         </ProtectedRoute>
       }/>
 
+      <Route path="/all-Interviews" element={
+        <ProtectedRoute>
+            <AllInterviews/>
+        </ProtectedRoute>
+      }/>
+       
+      <Route
+          path="/interview-review/:interviewId" element={
+            <ProtectedRoute>
+              <InterviewReview/>
+            </ProtectedRoute>
+          }
+      />
+      
       </Routes>
     </BrowserRouter>
   )
