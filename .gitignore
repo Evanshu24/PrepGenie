@@ -4,7 +4,18 @@
 
 Backend/node_modules/
 Backend/.env
+# Build directory
+Backend/parser/build/
 
+# CMake generated files
+Backend/parser/CMakeCache.txt
+Backend/parser/CMakeFiles/
+Backend/parser/cmake_install.cmake
+Backend/parser/Makefile
+Backend/parser/compile_commands.json
+
+# Local/project data
+Backend/parser/data/
 
 # =========================
 # Python - AI
