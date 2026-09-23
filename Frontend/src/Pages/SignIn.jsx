@@ -7,13 +7,15 @@ export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
+    const [error,setError] = useState("");
+    const [isSigning, setIsSigning] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
+            setIsSigning(true);
             const res = await fetch("http://localhost:5000/api/login", {
                 method: "POST",
                 headers: {
@@ -28,17 +30,20 @@ export default function SignInPage() {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || "Login failed");
+                setError(data.message || "Login failed");
+                setIsSigning(false);
                 return;
             }
-
+            
             localStorage.setItem("token", data.token);
-
             alert("Login successful");
             navigate("/");
         } catch (error) {
             console.error(error);
-            alert("Something went wrong");
+            setError("Something went wrong. Please try again later.");
+        }finally{
+            setError("");
+            setIsSigning(false);
         }
     };
 
@@ -117,10 +122,15 @@ export default function SignInPage() {
                         <button
                             type="submit"
                             className="w-full h-[58px] border-none rounded-[12px] bg-[#2563EB] text-white text-[22px] font-semibold transition-colors cursor-pointer duration-300 hover:bg-[#1d4ed8]"
+                            disabled={isSigning}
                         >
-                            Log In
+                            {isSigning ? "Signing in...." : "Log In"}
                         </button>
-
+                        {error && 
+                            <div className="flex items-center justify-center">
+                                <p className="text-center text-sm text-red-500 mt-2">{error}</p>
+                            </div>
+                        }
                     </form>
 
                 </div>

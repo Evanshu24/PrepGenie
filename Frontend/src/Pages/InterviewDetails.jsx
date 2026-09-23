@@ -2,163 +2,193 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function InterviewDetails() {
-  const roles = {
-    Engineering: [
-      "Software Engineer",
-      "Frontend Developer",
-      "Backend Developer",
-      "Full Stack Developer",
-      "DevOps Engineer",
-      "Data Scientist",
-      "Machine Learning Engineer",
-      "AI Engineer",
-      "Cybersecurity Engineer",
-      "Cloud Engineer",
-      "QA Engineer",
-      "Embedded Systems Engineer",
-      "Network Engineer",
-      "Database Administrator",
-    ],
 
-    Management: [
-      "Product Manager",
-      "Project Manager",
-      "Program Manager",
-      "Business Analyst",
-      "Management Trainee",
-      "Operations Manager",
-      "Strategy Analyst",
-    ],
+    const roles = {
+        Engineering: [
+            "Software Engineer",
+            "Frontend Developer",
+            "Backend Developer",
+            "Full Stack Developer",
+            "DevOps Engineer",
+            "Data Scientist",
+            "Machine Learning Engineer",
+            "AI Engineer",
+            "Cybersecurity Engineer",
+            "Cloud Engineer",
+            "QA Engineer",
+            "Embedded Systems Engineer",
+            "Network Engineer",
+            "Database Administrator"
+        ],
 
-    HumanResources: [
-      "HR Executive",
-      "HR Generalist",
-      "HR Business Partner",
-      "Talent Acquisition Specialist",
-      "Technical Recruiter",
-      "Recruiter",
-      "People Operations Associate",
-      "Compensation & Benefits Analyst",
-      "Learning & Development Specialist",
-    ],
+        Management: [
+            "Product Manager",
+            "Project Manager",
+            "Program Manager",
+            "Business Analyst",
+            "Management Trainee",
+            "Operations Manager",
+            "Strategy Analyst"
+        ],
 
-    Finance: [
-      "Financial Analyst",
-      "Investment Banking Analyst",
-      "Equity Research Analyst",
-      "Risk Analyst",
-      "Credit Analyst",
-      "Treasury Analyst",
-      "Tax Consultant",
-      "Accountant",
-      "Auditor",
-    ],
+        HumanResources: [
+            "HR Executive",
+            "HR Generalist",
+            "HR Business Partner",
+            "Talent Acquisition Specialist",
+            "Technical Recruiter",
+            "Recruiter",
+            "People Operations Associate",
+            "Compensation & Benefits Analyst",
+            "Learning & Development Specialist"
+        ],
 
-    SalesMarketing: [
-      "Sales Executive",
-      "Business Development Executive",
-      "Business Development Manager",
-      "Marketing Executive",
-      "Digital Marketing Specialist",
-      "SEO Specialist",
-      "Content Marketing Specialist",
-      "Social Media Manager",
-      "Brand Manager",
-    ],
+        Finance: [
+            "Financial Analyst",
+            "Investment Banking Analyst",
+            "Equity Research Analyst",
+            "Risk Analyst",
+            "Credit Analyst",
+            "Treasury Analyst",
+            "Tax Consultant",
+            "Accountant",
+            "Auditor"
+        ],
 
-    Consulting: [
-      "Management Consultant",
-      "Technology Consultant",
-      "Business Consultant",
-      "Strategy Consultant",
-      "SAP Consultant",
-      "ERP Consultant",
-    ],
+        SalesMarketing: [
+            "Sales Executive",
+            "Business Development Executive",
+            "Business Development Manager",
+            "Marketing Executive",
+            "Digital Marketing Specialist",
+            "SEO Specialist",
+            "Content Marketing Specialist",
+            "Social Media Manager",
+            "Brand Manager"
+        ],
 
-    Design: [
-      "UI/UX Designer",
-      "Graphic Designer",
-      "Product Designer",
-      "Motion Designer",
-    ],
+        Consulting: [
+            "Management Consultant",
+            "Technology Consultant",
+            "Business Consultant",
+            "Strategy Consultant",
+            "SAP Consultant",
+            "ERP Consultant"
+        ],
 
-    Data: [
-      "Data Analyst",
-      "Business Intelligence Analyst",
-      "Analytics Consultant",
-      "Research Analyst",
-    ],
+        Design: [
+            "UI/UX Designer",
+            "Graphic Designer",
+            "Product Designer",
+            "Motion Designer"
+        ],
 
-    Operations: [
-      "Operations Executive",
-      "Supply Chain Analyst",
-      "Logistics Coordinator",
-      "Procurement Specialist",
-      "Inventory Analyst",
-    ],
+        Data: [
+            "Data Analyst",
+            "Business Intelligence Analyst",
+            "Analytics Consultant",
+            "Research Analyst"
+        ],
 
-    CustomerSupport: [
-      "Customer Success Manager",
-      "Customer Support Executive",
-      "Technical Support Engineer",
-      "Implementation Consultant",
-    ],
+        Operations: [
+            "Operations Executive",
+            "Supply Chain Analyst",
+            "Logistics Coordinator",
+            "Procurement Specialist",
+            "Inventory Analyst"
+        ],
 
-    Legal: [
-      "Legal Associate",
-      "Compliance Officer",
-      "Corporate Lawyer",
-      "Legal Analyst",
-    ],
+        CustomerSupport: [
+            "Customer Success Manager",
+            "Customer Support Executive",
+            "Technical Support Engineer",
+            "Implementation Consultant"
+        ],
 
-    Healthcare: [
-      "Medical Officer",
-      "Pharmacist",
-      "Clinical Research Associate",
-      "Healthcare Administrator",
-    ],
+        Legal: [
+            "Legal Associate",
+            "Compliance Officer",
+            "Corporate Lawyer",
+            "Legal Analyst"
+        ],
 
-    Education: [
-      "Teacher",
-      "Professor",
-      "Teaching Assistant",
-      "Instructional Designer",
-    ],
+        Healthcare: [
+            "Medical Officer",
+            "Pharmacist",
+            "Clinical Research Associate",
+            "Healthcare Administrator"
+        ],
 
-    Government: [
-      "Civil Services",
-      "Bank PO",
-      "SSC CGL",
-      "Railway Officer",
-      "Defence Officer",
-    ],
-  };
+        Education: [
+            "Teacher",
+            "Professor",
+            "Teaching Assistant",
+            "Instructional Designer"
+        ],
 
-  const [user, setUser] = useState(null);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
-  const [selectedDuration, setSelectedDuration] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [startingInterview, setStartingInterview] = useState(false);
+        Government: [
+            "Civil Services",
+            "Bank PO",
+            "SSC CGL",
+            "Railway Officer",
+            "Defence Officer"
+        ]
+    };
 
-  const resumeInputRef = useRef(null);
+    const [user, setUser] = useState(null);
+    const [selectedRole, setSelectedRole] = useState("");
+    const [selectedDifficulty, setSelectedDifficulty] = useState("");
+    const [selectedDuration, setSelectedDuration] = useState("");
+    const [loading,setLoading]= useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error,setError] = useState("");
+    const resumeInputRef = useRef(null);
 
-  const LoginToken = localStorage.getItem("token");
-  const navigate = useNavigate();
+    const LoginToken = localStorage.getItem("token");
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/me", {
-      headers: {
-        Authorization: `Bearer ${LoginToken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setUser(data.user);
-        } else {
-          console.log(data.message);
+    useEffect(() => {
+        fetch("http://localhost:5000/api/me", {
+            headers: {
+                Authorization: `Bearer ${LoginToken}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setUser(data.user);
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch(err => console.log(err))
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+    const viewResume = async () => {
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/viewResume",
+                {
+                    headers: {
+                        Authorization: `Bearer ${LoginToken}`
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Unable to fetch resume");
+            }
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+
+            window.open(url, "_blank");
+
+        } catch (error) {
+            console.log(error);
         }
       })
       .catch((err) => console.log(err))
@@ -260,7 +290,47 @@ export default function InterviewDetails() {
       },
     });
 
-    const data = await response.json();
+        } catch (error) {
+            console.error("Error updating resume: ", error);
+        }
+    };
+
+    const handleSubmit=async(e)=>{
+        try{
+            setError("");
+            setIsSubmitting(true);
+            const res=await fetch("http://localhost:5000/api/interview/startInterview",
+                {
+                    method: "POST",
+                    headers:{
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${LoginToken}`
+                    },
+                    body: JSON.stringify({
+                        role: selectedRole,
+                        difficulty: selectedDifficulty,
+                        duration: selectedDuration,
+                        keywords: ["Python","APIs","Cron"] //this is right now temporary, later I will use C++ parser to extract these from resume
+                    })
+                });
+            
+            const data = await res.json();
+            if(!res.ok){
+                setError(data.message || "Unable to start interview");
+                return ;
+            }
+            localStorage.setItem("threadId",data.threadId);
+            localStorage.setItem("interviewId",data.interviewId);
+            localStorage.setItem("questionId",data.questionId);
+            localStorage.setItem("question",JSON.stringify(data.question));
+            navigate('/interview');
+
+        }catch(error){
+            console.log("Error submit button: ",error);
+        }finally{
+            setIsSubmitting(false);
+        }
+    };
 
     if (!response.ok) {
       throw new Error(data.message || "Unable to analyze resume");
@@ -518,70 +588,124 @@ export default function InterviewDetails() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => resumeInputRef.current.click()}
-                  className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer"
-                >
-                  Update
-                </button>
+                <section className="text-center mb-10">
+                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">Start Your Interview</h1>
+                    <p className="text-lg text-slate-500">Configure your interview before you begin</p>
+                </section>
 
-                <input
-                  ref={resumeInputRef}
-                  type="file"
-                  accept=".pdf"
-                  className="hidden"
-                  onChange={updateResume}
-                />
-              </div>
-            )}
+                <section className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg border border-slate-200 p-6 md:p-10">
 
-            {!user?.resume && (
-              <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center bg-slate-50">
-                <div className="text-3xl mb-3">📄</div>
+                    <div className="mb-8">
+                        <h2 className="text-2xl font-semibold text-slate-900 mb-2">Interview Details</h2>
+                        <p className="text-slate-500">Select the role, difficulty and duration for your interview.</p>
+                    </div>
 
-                <p className="font-medium text-slate-700">No resume uploaded</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
 
-                <p className="text-sm text-slate-500 mt-1 mb-4">
-                  Upload your resume to continue
-                </p>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Target Role</label>
+                            <select
+                                value={selectedRole}
+                                disabled={isSubmitting}
+                                onChange={(e) => setSelectedRole(e.target.value)}
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="" hidden>Select a role</option>
+                                {Object.entries(roles).map(([category, roleList]) => (
+                                    <optgroup key={category} label={category}>
+                                        {roleList.map(role => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
+                                    </optgroup>
+                                ))}
+                            </select>
+                        </div>
 
-                <button
-                  onClick={() => resumeInputRef.current.click()}
-                  className="px-5 py-2 rounded-lg bg-white border border-slate-300 text-slate-700 font-medium hover:border-blue-500 hover:text-blue-600 transition cursor-pointer"
-                >
-                  Upload Resume
-                </button>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Difficulty</label>
+                            <select
+                                value={selectedDifficulty}
+                                disabled={isSubmitting}
+                                onChange={(e) => setSelectedDifficulty(e.target.value)}
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="" hidden>Select difficulty</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
 
-                <input
-                  ref={resumeInputRef}
-                  type="file"
-                  accept=".pdf"
-                  className="hidden"
-                  onChange={uploadResume}
-                />
-              </div>
-            )}
-          </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Duration</label>
+                            <select
+                                value={selectedDuration}
+                                disabled={isSubmitting}
+                                onChange={(e) => setSelectedDuration(e.target.value)}
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="" hidden>Select duration</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">60 minutes</option>
+                            </select>
+                        </div>
 
-          <div className="border-t border-slate-200 my-8" />
+                    </div>
+                    
+                    <div className="border-t border-slate-200 my-8" />
 
-          <div className="flex justify-end">
-            <button
-              className="w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={handleSubmit}
-              disabled={startingInterview}
-            >
-              {startingInterview ? "Analyzing Resume..." : "Start Interview →"}
-            </button>
-          </div>
+                    <div>
 
-          {error && (
-            <div className="text-red-500 text-sm text-center mt-4 mb-0">
-              {error}
-            </div>
-          )}
-        </section>
-      </main>
-    </div>
-  );
+                        <div className="mb-3">
+                            <h3 className="text-lg font-semibold text-slate-900">Resume</h3>
+                            <p className="text-sm text-slate-500 mt-1">Your resume will be used during the interview.</p>
+                        </div>
+                        {user?.resume && (
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-slate-50 border border-slate-200 rounded-xl px-5 py-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-11 h-11 flex items-center justify-center rounded-lg bg-red-50 text-red-500 text-xl">
+                                        📄
+                                    </div>
+                                    <div>
+                                        <button onClick={viewResume} disabled={isSubmitting} className="font-medium text-slate-800 hover:text-blue-600 transition cursor-pointer">
+                                            {user?.resume.split("-")[1]}
+                                        </button>
+                                        <p className="text-sm text-slate-500 mt-1">
+                                            Uploaded resume
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <button onClick={() => resumeInputRef.current.click()} disabled={isSubmitting} className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer">
+                                    Update
+                                </button>
+
+                                <input ref={resumeInputRef} type="file" accept=".pdf" className="hidden" onChange={updateResume} />
+                            </div>
+                        )}
+
+                        {!user?.resume && (
+                            <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center bg-slate-50">
+                                <div className="text-3xl mb-3">📄</div>
+                                <p className="font-medium text-slate-700">No resume uploaded</p>
+                                <p className="text-sm text-slate-500 mt-1 mb-4">Upload your resume to continue</p>
+                                <button onClick={() => resumeInputRef.current.click()} className="px-5 py-2 rounded-lg bg-white border border-slate-300 text-slate-700 font-medium hover:border-blue-500 hover:text-blue-600 transition cursor-pointer">
+                                    Upload Resume
+                                </button>
+                                <input ref={resumeInputRef} type="file" accept=".pdf" className="hidden" onChange={uploadResume} />
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="border-t border-slate-200 my-8" />
+                        <div className="flex justify-end">
+                                <button className={`w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ${isSubmitting? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleSubmit} disabled={isSubmitting}>Start Interview →</button>
+                        </div>
+                    {error && <div className="text-red-500 text-sm text-center mt-4 mb-0">{error}</div>}
+                </section>
+            </main>
+        </div>
+    );
 }
