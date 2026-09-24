@@ -1,1 +1,1 @@
-from .model import model, agent_model
+from .model import model, agent_model, analyzer_model

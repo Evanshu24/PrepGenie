@@ -55,6 +55,20 @@ agent_model = ChatGroq(
 
 print(f"[DEBUG][models.py] Agent model loaded: " f"model={agent_model_name}")
 
+# ============================================================
+# Analyzer Model
+# ============================================================
+
+analyzer_model_name = "openai/gpt-oss-safeguard-20b"
+
+analyzer_model = ChatGroq(
+    model=agent_model_name,
+    temperature=0.4,
+    max_tokens=2048,
+)
+
+print(f"[DEBUG][models.py] Analyzer model loaded: " f"model={analyzer_model_name}")
+
 # agent_model_name = "gemini-3.6-flash"
 #
 # agent_model = ChatGoogleGenerativeAI(
