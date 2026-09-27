@@ -6,7 +6,6 @@
 
 namespace ResumeParser {
 
-// helper functions
 namespace {
 
 std::string trim(const std::string &text) {
@@ -34,8 +33,20 @@ std::string joinLines(const std::vector<Line> &lines, size_t start) {
   return result;
 }
 
-bool contains(const std::string &text, const std::string &value) {
-  return text.find(value) != std::string::npos;
+bool looksLikeHeading(const std::string &text) {
+  static const std::regex headingPattern(
+      R"(^[A-Z][A-Za-z0-9()&/+\-\s]{1,59}$)");
+
+  if (text.empty())
+    return false;
+
+  if (text.back() == '.')
+    return false;
+
+  if (std::count(text.begin(), text.end(), ',') > 0)
+    return false;
+
+  return std::regex_match(text, headingPattern);
 }
 
 } // namespace
@@ -87,60 +98,37 @@ EntityExtractor::extractPersonalInfo(const std::vector<Line> &lines) {
   return info;
 }
 
-std::vector<Education>
+std::vector<Section>
 EntityExtractor::extractEducation(const std::vector<Line> &lines) {
-  std::vector<Education> result;
+  std::vector<Section> result;
 
   if (lines.empty())
     return result;
 
-  Education education;
+  Section section;
+  section.heading = trim(lines[0].text);
+  section.content = joinLines(lines, 1);
 
-  education.institution = trim(lines[0].text);
-
-  if (lines.size() >= 3)
-    education.degree = trim(lines[2].text);
-
-  if (lines.size() > 3)
-    education.description = joinLines(lines, 3);
-
-  if (!education.institution.empty() || !education.degree.empty() ||
-      !education.description.empty()) {
-    result.push_back(education);
+  if (!section.heading.empty() || !section.content.empty()) {
+    result.push_back(section);
   }
 
   return result;
 }
 
-std::vector<Experience>
+std::vector<Section>
 EntityExtractor::extractExperience(const std::vector<Line> &lines) {
-  std::vector<Experience> result;
+  std::vector<Section> result;
 
   if (lines.empty())
     return result;
 
-  Experience experience;
+  Section section;
+  section.heading = trim(lines[0].text);
+  section.content = joinLines(lines, 1);
 
-  experience.company = trim(lines[0].text);
-
-  if (lines.size() >= 2) {
-    experience.duration = trim(lines[1].text);
-
-    if (contains(experience.duration, "May 2025") &&
-        contains(experience.duration, "July 2025")) {
-      experience.duration = "May 2025 - July 2025";
-    }
-  }
-
-  if (lines.size() >= 3)
-    experience.title = trim(lines[2].text);
-
-  if (lines.size() > 3)
-    experience.description = joinLines(lines, 3);
-
-  if (!experience.company.empty() || !experience.title.empty() ||
-      !experience.description.empty()) {
-    result.push_back(experience);
+  if (!section.heading.empty() || !section.content.empty()) {
+    result.push_back(section);
   }
 
   return result;
@@ -180,10 +168,29 @@ EntityExtractor::extractSkills(const std::vector<Line> &lines) {
 }
 
 std::vector<Project>
-EntityExtractor::extractProjects(const std::vector<Line> &lines) {
-  std::vector<Project> result;
+EntityExtractor::extractProjects(const std::vector<Line> &lines,
+                                 std::vector<Section> &other) {
+  std::vector<Project> projects;
 
   Project current;
+  Section leftover;
+
+  auto flushProject = [&]() {
+    if (!current.name.empty()) {
+      projects.push_back(current);
+      current = Project{};
+    }
+  };
+
+  auto flushLeftover = [&]() {
+    if (!leftover.content.empty()) {
+      if (leftover.heading.empty())
+        leftover.heading = "Other";
+
+      other.push_back(leftover);
+      leftover = Section{};
+    }
+  };
 
   for (size_t i = 0; i < lines.size(); ++i) {
     const std::string text = trim(lines[i].text);
@@ -191,27 +198,20 @@ EntityExtractor::extractProjects(const std::vector<Line> &lines) {
     if (text.empty())
       continue;
 
-    bool isProjectName = text == "PrepGenie AI Interview Agent" ||
-                         text == "Connecting the Dots" ||
-                         text == "Video Chat Assistant";
+    if (looksLikeHeading(text)) {
+      flushProject();
+      flushLeftover();
 
-    if (isProjectName) {
-      if (!current.name.empty())
-        result.push_back(current);
-
-      current = Project{};
       current.name = text;
       continue;
     }
 
-    if (current.name.empty())
+    if (current.name.empty()) {
+      if (!leftover.content.empty())
+        leftover.content += " ";
+
+      leftover.content += text;
       continue;
-
-    if (i > 0) {
-      const std::string previous = trim(lines[i - 1].text);
-
-      if (previous == current.name)
-        continue;
     }
 
     const size_t commaCount = std::count(text.begin(), text.end(), ',');
@@ -219,26 +219,26 @@ EntityExtractor::extractProjects(const std::vector<Line> &lines) {
     if (commaCount >= 2)
       continue;
 
-    if (!current.description.empty())
-      current.description += " ";
+    if (!current.content.empty())
+      current.content += " ";
 
-    current.description += text;
+    current.content += text;
   }
 
-  if (!current.name.empty())
-    result.push_back(current);
+  flushProject();
+  flushLeftover();
 
-  return result;
+  return projects;
 }
 
-std::vector<OtherSection>
+std::vector<Section>
 EntityExtractor::extractOther(const std::vector<Line> &lines) {
-  std::vector<OtherSection> result;
+  std::vector<Section> result;
 
   if (lines.empty())
     return result;
 
-  OtherSection current;
+  Section current;
 
   for (const auto &line : lines) {
     std::string text = trim(line.text);
@@ -250,10 +250,10 @@ EntityExtractor::extractOther(const std::vector<Line> &lines) {
       if (current.heading.empty())
         current.heading = "Certifications";
 
-      if (!current.description.empty())
-        current.description += "\n";
+      if (!current.content.empty())
+        current.content += "\n";
 
-      current.description += text;
+      current.content += text;
       continue;
     }
 
@@ -261,11 +261,11 @@ EntityExtractor::extractOther(const std::vector<Line> &lines) {
 
     if (colonPos != std::string::npos && colonPos == text.size() - 1) {
 
-      if (!current.heading.empty() && !current.description.empty()) {
+      if (!current.heading.empty() && !current.content.empty()) {
         result.push_back(current);
       }
 
-      current = OtherSection{};
+      current = Section{};
       current.heading = trim(text.substr(0, colonPos));
       continue;
     }
@@ -273,13 +273,13 @@ EntityExtractor::extractOther(const std::vector<Line> &lines) {
     if (current.heading.empty())
       current.heading = "Other";
 
-    if (!current.description.empty())
-      current.description += "\n";
+    if (!current.content.empty())
+      current.content += "\n";
 
-    current.description += text;
+    current.content += text;
   }
 
-  if (!current.heading.empty() && !current.description.empty()) {
+  if (!current.heading.empty() && !current.content.empty()) {
     result.push_back(current);
   }
 
@@ -291,14 +291,6 @@ Resume EntityExtractor::extract(const std::vector<ClassifiedBlock> &blocks) {
   Resume resume;
 
   for (const auto &block : blocks) {
-
-    // std::cout << "\n============================\n";
-    // std::cout << "BLOCK TYPE: " << static_cast<int>(block.type) << "\n";
-    //
-    // for (const auto &line : block.lines)
-    //   std::cout << "[" << line.text << "]\n";
-    //
-    // std::cout << "============================\n";
 
     switch (block.type) {
 
@@ -344,10 +336,13 @@ Resume EntityExtractor::extract(const std::vector<ClassifiedBlock> &blocks) {
     }
 
     case SectionType::Projects: {
-      auto projects = extractProjects(block.lines);
+      std::vector<Section> other;
+      auto projects = extractProjects(block.lines, other);
 
       resume.projects.insert(resume.projects.end(), projects.begin(),
                              projects.end());
+
+      resume.other.insert(resume.other.end(), other.begin(), other.end());
 
       break;
     }

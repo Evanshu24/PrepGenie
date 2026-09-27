@@ -4,6 +4,7 @@
 
 Backend/node_modules/
 Backend/.env
+Backend/Uploads/
 # Build directory
 Backend/parser/build/
 

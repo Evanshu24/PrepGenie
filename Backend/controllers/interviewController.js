@@ -89,6 +89,7 @@ const startInterview = async(req,res)=>{
             difficulty : difficulty,
             duration : Number(duration),
             threadId : data.thread_id,
+            lastActivityAt: new Date()
         });
 
         const interviewQuestions = await InterviewQuestions.create({
@@ -189,6 +190,9 @@ const respondInterview = async(req,res)=>{
                 message: "You are not authorized to modify this interview"
             });
         }
+
+        interview.lastActivityAt=new Date();
+        await interview.save();
 
         const formData = new FormData();
         formData.append("thread_id",threadId);
@@ -347,4 +351,56 @@ const questions = async(req,res)=>{
     }
 };
 
-export { Dashboard, startInterview, respondInterview, abandonInterview, questions};
+const heartbeat = async (req, res) => {
+    try {
+        const { interviewId, threadId } = req.body;
+
+        if (!interviewId || !threadId) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing interview details"
+            });
+        }
+
+        const interview = await Interview.findOne({
+            _id: interviewId,
+            userId: req.user._id
+        });
+
+        if (!interview) {
+            return res.status(404).json({
+                success: false,
+                message: "Interview not found"
+            });
+        }
+
+        if (interview.status !== "in-progress") {
+            return res.status(400).json({
+                success: false,
+                message: "Interview is no longer active"
+            });
+        }
+
+        if (interview.threadId !== threadId) {
+            return res.status(403).json({
+                success: false,
+                message: "Invalid interview session"
+            });
+        }
+
+        interview.lastActivityAt = new Date();
+        await interview.save();
+
+        return res.status(200).json({
+            success: true
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+};
+
+export { Dashboard, startInterview, respondInterview, abandonInterview, questions, heartbeat};

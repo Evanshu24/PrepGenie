@@ -77,7 +77,7 @@ export default function allInterviews() {
                             <p className="text-gray-500 mt-2">Start your first interview to see it here.</p>
                         </div>) : 
                         (<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                            {interviews.map((interview) => (
+                            {interviews.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).map((interview) => (
                                 <div key={interview._id} onClick={() =>navigate(`/interview-review/${interview._id}`)}
                                     className="bg-white rounded-xl border border-gray-200 p-5 cursor-pointer hover:shadow-md transition"
                                 >

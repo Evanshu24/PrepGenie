@@ -1,11 +1,8 @@
 import User from "../models/User.js";
 import { parseResume } from "../utils/ResumeParser.js";
 import { unlink } from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
+import cloudinary from "../utils/Cloudinary.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 export const getLoggedInUser = async (req, res) => {
   try {
     res.status(200).json({
@@ -21,53 +18,79 @@ export const getLoggedInUser = async (req, res) => {
 };
 
 export const uploadResume = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload a resume",
-      });
-    }
-
-    req.user.resume = req.file.path;
+    let cloudinaryPublicId = null;
 
     try {
-      const parsed = await parseResume(req.file.path);
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "Please upload a resume",
+        });
+      }
+
+      let parsed = null;
+
+      try {
+        parsed = await parseResume(req.file.path);
+      } catch (parseErr) {
+        console.error("Resume parsing failed:", parseErr.message);
+      }
+      const resourceType =req.file.mimetype === "application/pdf" ? "image" : "raw";
+
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "prepgenie/resumes",
+        resource_type: resourceType,
+      });
+
+
+      cloudinaryPublicId = result.public_id;
+
+      req.user.resume = result.secure_url;
+      req.user.resumePublicId = result.public_id;
+      req.user.resumeResourceType = resourceType;
+      req.user.resumeName = req.file.originalname;
       req.user.parsedResume = parsed;
-    } catch (parseErr) {
-      console.error("Resume parsing failed:", parseErr.message);
+
+      await req.user.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Resume uploaded successfully",
+        resume: req.user.resume,
+        resumeName: req.user.resumeName,
+        parsedResume: req.user.parsedResume,
+      });
+    }catch (error) {
+      console.log(error);
+        if (cloudinaryPublicId) {
+          try {
+            await cloudinary.uploader.destroy(cloudinaryPublicId, {
+              resource_type: "image",
+            });
+          } catch (deleteErr) {
+            console.error(
+              "Cloudinary cleanup failed:",
+              deleteErr.message
+            );
+          }
+        }
+
+        res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+    }finally{
+        if(req.file?.path){
+          try{
+            await unlink(req.file.path);
+          }catch (fileErr){
+            console.error(
+              "Temporary file cleanup failed:",
+              fileErr.message
+            );
+          }
+        }
     }
-
-    await req.user.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Resume uploaded successfully",
-      resume: req.user.resume,
-      parsedResume: req.user.parsedResume,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-export const getResume = async (req, res) => {
-  if (!req.user.resume) {
-    return res.status(404).json({
-      success: false,
-      message: "No resume found",
-    });
-  }
-
-  res.status(200).json({
-    success: true,
-    message: "Resume fetched successfully",
-    resume: req.user.resume,
-    parsedResume: req.user.parsedResume || null,
-  });
 };
 
 export const viewResume = async (req, res) => {
@@ -77,18 +100,17 @@ export const viewResume = async (req, res) => {
       message: "No resume found",
     });
   }
-  try {
-    const filePath = path.join(__dirname, "..", req.user.resume);
-    res.sendFile(filePath);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+
+  res.status(200).json({
+    success: true,
+    resume: req.user.resume,
+  });
 };
 
 export const updateResume = async (req, res) => {
+  let newPublicId = null;
+  let newResourceType = null;
+
   try {
     if (!req.file) {
       return res.status(400).json({
@@ -97,25 +119,51 @@ export const updateResume = async (req, res) => {
       });
     }
 
-    let oldpath = req.user.resume;
-    let newpath = req.file.path;
-
-    req.user.resume = newpath;
+    let parsed = null;
+    let parseSuccess = false;
 
     try {
-      const parsed = await parseResume(newpath);
-      req.user.parsedResume = parsed;
+      parsed = await parseResume(req.file.path);
+      parseSuccess = true;
     } catch (parseErr) {
       console.error("Resume parsing failed:", parseErr.message);
     }
 
+    const resourceType =
+      req.file.mimetype === "application/pdf" ? "image" : "raw";
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "prepgenie/resumes",
+      resource_type: resourceType,
+    });
+
+    newPublicId = result.public_id;
+    newResourceType = resourceType;
+
+    const oldPublicId = req.user.resumePublicId;
+    const oldResourceType = req.user.resumeResourceType;
+    
+    req.user.resumeName = req.file.originalname;
+    req.user.resume = result.secure_url;
+    req.user.resumePublicId = result.public_id;
+    req.user.resumeResourceType = resourceType;
+
+    if (parseSuccess) {
+      req.user.parsedResume = parsed;
+    }
+
     await req.user.save();
 
-    if (oldpath) {
+    if (oldPublicId) {
       try {
-        await unlink(oldpath);
-      } catch (error) {
-        console.log("Old resume deletion failed:", error.message);
+        await cloudinary.uploader.destroy(oldPublicId, {
+          resource_type: oldResourceType || "image",
+        });
+      } catch (deleteErr) {
+        console.error(
+          "Old Cloudinary resume deletion failed:",
+          deleteErr.message
+        );
       }
     }
 
@@ -123,40 +171,38 @@ export const updateResume = async (req, res) => {
       success: true,
       message: "Resume updated successfully",
       resume: req.user.resume,
+      resumeName: req.user.resumeName,
       parsedResume: req.user.parsedResume,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-export const deleteResume = async (req, res) => {
-  try {
-    let path = req.user.resume;
-
-    if (!path) {
-      return res.status(404).json({
-        success: false,
-        message: "No resume found",
-      });
+    console.log("Error updating resume",error);
+    if (newPublicId) {
+      try {
+        await cloudinary.uploader.destroy(newPublicId, {
+          resource_type: newResourceType || "image",
+        });
+      } catch (deleteErr) {
+        console.error(
+          "New Cloudinary resume cleanup failed:",
+          deleteErr.message
+        );
+      }
     }
 
-    await unlink(path);
-
-    req.user.resume = null;
-    req.user.parsedResume = null; // add this
-    await req.user.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Resume deleted successfully",
-    });
-  } catch (error) {
     res.status(500).json({
       success: false,
       message: error.message,
     });
+  } finally {
+    if (req.file?.path) {
+      try {
+        await unlink(req.file.path);
+      } catch (fileErr) {
+        console.error(
+          "Temporary file cleanup failed:",
+          fileErr.message
+        );
+      }
+    }
   }
 };
