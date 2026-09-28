@@ -8,7 +8,6 @@ print("[DEBUG] OPENAI_API_KEY loaded:", bool(os.getenv("OPENAI_API_KEY")))
 print("[DEBUG] GROQ_API_KEY loaded:", bool(os.getenv("GROQ_API_KEY")))
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 
 # from langchain_openai import ChatOpenAI
@@ -69,62 +68,13 @@ analyzer_model = ChatGroq(
 
 print(f"[DEBUG][models.py] Analyzer model loaded: " f"model={analyzer_model_name}")
 
-# agent_model_name = "gemini-3.6-flash"
-#
-# agent_model = ChatGoogleGenerativeAI(
-#     model=agent_model_name,
-#     temperature=0.4,
-#     max_output_tokens=2048,
-# )
-#
-# print(f"[DEBUG][models.py] Agent model loaded: " f"model={agent_model_name}")
+from groq import Groq
 
+# ============================================================
+# Speech-to-Text Model (Whisper via Groq)
+# ============================================================
+stt_model_name = "whisper-large-v3-turbo"
 
-# interview_model_repo = "deepseek-ai/DeepSeek-V4-Flash-0731"
-#
-# interview_model_endpoint = HuggingFaceEndpoint(
-#     model=interview_model_repo,
-#     task="text-generation",
-#     temperature=0.5,
-#     max_new_tokens=2048,
-# )
-#
-# print(
-#     f"[DEBUG][models.py] HuggingFaceEndpoint created: "
-#     f"repo={interview_model_repo}, "
-#     f"max_new_tokens={interview_model_endpoint.max_new_tokens}"
-# )
-#
-# model = ChatHuggingFace(llm=interview_model_endpoint)
+stt_model = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-
-# agent_model_repo = "Qwen/Qwen3-32B"
-#
-# agent_model_endpoint = HuggingFaceEndpoint(
-#     model=agent_model_repo,
-#     task="text-generation",
-#     temperature=0.2,
-#     max_new_tokens=2048,
-# )
-#
-# print(
-#     f"[DEBUG][models.py] HuggingFaceEndpoint created: "
-#     f"repo={agent_model_repo}, "
-#     f"max_new_tokens={agent_model_endpoint.max_new_tokens}"
-# )
-#
-# agent_model = ChatHuggingFace(llm=agent_model_endpoint)
-
-
-# agent_model_name = "gpt-4o-mini"
-#
-# agent_model = ChatOpenAI(
-#     model=agent_model_name,
-#     temperature=0.4,
-#     max_tokens=2048,
-# )
-#
-# print(
-#     f"[DEBUG][models.py] OpenAI agent model wrapper created: "
-#     f"model={agent_model_name}"
-# )
+print(f"[DEBUG][models.py] STT model loaded: {stt_model_name}")

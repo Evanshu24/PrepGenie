@@ -2,7 +2,16 @@ import { analyzeResume } from "../analyzer/resumeAnalysis.js";
 
 export const analyzeResumeController = async (req, res) => {
   try {
-    const result = await analyzeResume(req.user._id);
+    const { role } = req.body;
+
+    if (!role) {
+      return res.status(400).json({
+        success: false,
+        message: "Role is required",
+      });
+    }
+
+    const result = await analyzeResume(req.user._id, role);
 
     res.status(200).json({
       success: true,
