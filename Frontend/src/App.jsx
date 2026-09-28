@@ -28,14 +28,14 @@ function App() {
         />
         <Route path="/signin" element={
           <>
-            <Navbar ShowSignIn={false} />
+            <Navbar />
             <SignInPage />
           </>
         }
         />
         <Route path="/signup" element={
           <>
-            <Navbar ShowSignIn={false} />
+            <Navbar/>
             <SignUp />
           </>
         }

@@ -18,13 +18,71 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      default: null,
+    },
+
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: undefined,
+    },
+
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    emailVerificationCode: {
+      type: String,
+      default: null,
+    },
+
+    emailVerificationExpires: {
+      type: Date,
+      default: null,
+    },
+
+    emailVerificationLastSent: {
+      type: Date,
+      default: null,
+    },
+
+    emailVerificationResendCount: {
+      type: Number,
+      default: 0,
+    },
+
+    emailVerificationResendReset: {
+      type: Date,
+      default: null,
+    },
+
+    emailVerificationAttempts: {
+        type: Number,
+        default: 0,
+    },
+
+    resumeName: {
+      type: String,
+      default: null,
     },
 
     resume: {
       type: String,
       default: null,
     },
+
+    resumePublicId: {
+      type: String,
+      default: null,
+    },
+
+    resumeResourceType: {
+      type: String,
+      default: null,
+    },
+
     parsedResume: {
       type: Object,
       default: null,

@@ -40,7 +40,12 @@ const interviewSchema = new mongoose.Schema({
     threadId: {
         type: String,
         required: true
-    }
+    },
+
+    lastActivityAt: {
+        type: Date,
+        default: null
+    },
 });
 
 const Interview = mongoose.model("Interview", interviewSchema);

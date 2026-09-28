@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 export default function Dashboard() {
     const roles = {
@@ -140,7 +140,6 @@ export default function Dashboard() {
     const resumeInputRef = useRef(null);
     const LoginToken = localStorage.getItem("token");
     const navigate = useNavigate();
-    // console.log(LoginToken);
     useEffect(() => {
         fetch("http://localhost:5000/api/me", {
             headers: {
@@ -190,10 +189,8 @@ export default function Dashboard() {
                 throw new Error("Unable to fetch resume");
             }
 
-            const blob = await response.blob();
-            const url = URL.createObjectURL(blob);
-
-            window.open(url, "_blank");
+            const data = await response.json();
+            window.open(data.resume, "_blank");
         } catch (error) {
             console.log(error);
         }
@@ -214,7 +211,8 @@ export default function Dashboard() {
                 const data = await res.json();
                 setUser(prev => ({
                     ...prev,
-                    resume: data.resume
+                    resume: data.resume,
+                    resumeName: data.resumeName.split(".")[0],
                 }));
 
                 console.log("Uploaded successfully!");
@@ -241,7 +239,8 @@ export default function Dashboard() {
                 const data = await response.json();
                 setUser(prev => ({
                     ...prev,
-                    resume: data.resume
+                    resume: data.resume,
+                    resumeName: data.resumeName.split(".")[0]
                 }));
 
                 console.log("Updated successfully!");
@@ -264,10 +263,11 @@ export default function Dashboard() {
             </div>
         );
     }
-    console.log(LoginToken);
+    // console.log(LoginToken);
+    console.log(user);
     return (
         <>
-            <div className="min-h-screen bg-gradient-to-br from-[#EFF6FF] via-white to-[#dbeafe]">
+            <div className="min-h-screen bg-gradient-to-br from-[#EFF6FF] via-white to-[#dbeafe] pt-20">
                 <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
                     <section className="mb-8">
                         <p className="text-3xl sm:text-4xl font-bold text-gray-900">Welcome back, {user.name} 👋</p>
@@ -300,7 +300,7 @@ export default function Dashboard() {
                             {user.resume ? (
                                 <div className="flex items-center justify-between gap-4 bg-gray-100 rounded-xl px-4 py-3">
                                     <button onClick={viewResume} className="text-[#2563EB] font-medium truncate hover:underline cursor-pointer">
-                                        {user.resume.split("-")[1]}
+                                        {user.resumeName}
                                     </button>
                                     <button
                                         onClick={() => resumeInputRef.current.click()}

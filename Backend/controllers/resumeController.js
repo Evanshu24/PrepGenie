@@ -7,7 +7,7 @@ export const analyzeResumeController = async (req, res) => {
     if (!role) {
       return res.status(400).json({
         success: false,
-        message: "Role is required",
+        message: "Select all required fields.",
       });
     }
 

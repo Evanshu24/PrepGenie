@@ -15,3 +15,5 @@ db = client["prepgenie"]
 questions_collection = db["questions"]
 allowed_collection = db["allowed"]
 required_skills = db["required_skills"]
+
+

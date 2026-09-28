@@ -172,6 +172,47 @@ export default function Interview() {
         setStartButton(!startButton);
     };
 
+    useEffect(() => {
+        if (!interview.interviewId || !interview.threadId) {
+            return;
+        }
+
+        const sendHeartbeat = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/interview/heartbeat",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${LoginToken}`
+                        },
+                        body: JSON.stringify({
+                            interviewId: interview.interviewId,
+                            threadId: interview.threadId
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.log("Heartbeat failed:", data.message);
+                }
+            }
+            catch (error) {
+                console.log("Heartbeat error:", error);
+            }
+        };
+
+        sendHeartbeat();
+
+        const interval = setInterval(sendHeartbeat, 30000);
+
+        return () => clearInterval(interval);
+
+    }, [interview.interviewId, interview.threadId]);
+
     const handleSubmit = async () => {
         try {
             if (!audioBlob) {
@@ -209,6 +250,7 @@ export default function Interview() {
                 localStorage.removeItem("questionId");
                 stream?.getTracks().forEach(track => track.stop());
                 setStream(null);
+                
                 navigate("/");
                 return;
             }
