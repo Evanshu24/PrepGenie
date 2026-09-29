@@ -217,6 +217,8 @@ const respondInterview = async(req,res)=>{
         console.log("FastAPI response:", data);
         
         interviewQuestionDoc.userAnswer = data.transcript;
+        // const refAnswer = data.reference_answer || {};
+        interviewQuestionDoc.aiEvaluation.optimalAnswer = data.reference_answer.answer;
         await interviewQuestionDoc.save();
 
         const currentQuestionNumber = interviewQuestionDoc.questionNumber;
@@ -246,6 +248,7 @@ const respondInterview = async(req,res)=>{
         });
 
     }catch(error){
+        console.log(error);
         return res.status(500).json({
             success: false,
             message: "Internal server error"

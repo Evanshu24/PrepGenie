@@ -3,149 +3,36 @@ import { useNavigate } from "react-router-dom";
 
 export default function InterviewDetails() {
 
-    const roles = {
-        Engineering: [
-            "Software Engineer",
-            "Frontend Developer",
-            "Backend Developer",
-            "Full Stack Developer",
-            "DevOps Engineer",
-            "Data Scientist",
-            "Machine Learning Engineer",
-            "AI Engineer",
-            "Cybersecurity Engineer",
-            "Cloud Engineer",
-            "QA Engineer",
-            "Embedded Systems Engineer",
-            "Network Engineer",
-            "Database Administrator"
-        ],
-
-        Management: [
-            "Product Manager",
-            "Project Manager",
-            "Program Manager",
-            "Business Analyst",
-            "Management Trainee",
-            "Operations Manager",
-            "Strategy Analyst"
-        ],
-
-        HumanResources: [
-            "HR Executive",
-            "HR Generalist",
-            "HR Business Partner",
-            "Talent Acquisition Specialist",
-            "Technical Recruiter",
-            "Recruiter",
-            "People Operations Associate",
-            "Compensation & Benefits Analyst",
-            "Learning & Development Specialist"
-        ],
-
-        Finance: [
-            "Financial Analyst",
-            "Investment Banking Analyst",
-            "Equity Research Analyst",
-            "Risk Analyst",
-            "Credit Analyst",
-            "Treasury Analyst",
-            "Tax Consultant",
-            "Accountant",
-            "Auditor"
-        ],
-
-        SalesMarketing: [
-            "Sales Executive",
-            "Business Development Executive",
-            "Business Development Manager",
-            "Marketing Executive",
-            "Digital Marketing Specialist",
-            "SEO Specialist",
-            "Content Marketing Specialist",
-            "Social Media Manager",
-            "Brand Manager"
-        ],
-
-        Consulting: [
-            "Management Consultant",
-            "Technology Consultant",
-            "Business Consultant",
-            "Strategy Consultant",
-            "SAP Consultant",
-            "ERP Consultant"
-        ],
-
-        Design: [
-            "UI/UX Designer",
-            "Graphic Designer",
-            "Product Designer",
-            "Motion Designer"
-        ],
-
-        Data: [
-            "Data Analyst",
-            "Business Intelligence Analyst",
-            "Analytics Consultant",
-            "Research Analyst"
-        ],
-
-        Operations: [
-            "Operations Executive",
-            "Supply Chain Analyst",
-            "Logistics Coordinator",
-            "Procurement Specialist",
-            "Inventory Analyst"
-        ],
-
-        CustomerSupport: [
-            "Customer Success Manager",
-            "Customer Support Executive",
-            "Technical Support Engineer",
-            "Implementation Consultant"
-        ],
-
-        Legal: [
-            "Legal Associate",
-            "Compliance Officer",
-            "Corporate Lawyer",
-            "Legal Analyst"
-        ],
-
-        Healthcare: [
-            "Medical Officer",
-            "Pharmacist",
-            "Clinical Research Associate",
-            "Healthcare Administrator"
-        ],
-
-        Education: [
-            "Teacher",
-            "Professor",
-            "Teaching Assistant",
-            "Instructional Designer"
-        ],
-
-        Government: [
-            "Civil Services",
-            "Bank PO",
-            "SSC CGL",
-            "Railway Officer",
-            "Defence Officer"
-        ]
-    };
-
+    const [roles,setRoles] = useState([]);
     const [user, setUser] = useState(null);
     const [selectedRole, setSelectedRole] = useState("");
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     const [selectedDuration, setSelectedDuration] = useState("");
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState("");
     const resumeInputRef = useRef(null);
 
     const LoginToken = localStorage.getItem("token");
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        const getRoles = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/resume/roles"
+                );
+
+                const data = await response.json();
+                setRoles(data.roles);
+            } catch (error) {
+                console.error("Error fetching roles:", error);
+            }
+        };
+
+        getRoles();
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:5000/api/me", {
@@ -158,7 +45,7 @@ export default function InterviewDetails() {
                 if (data.success) {
                     setUser(data.user);
                 } else {
-                    console.log(data.message);
+                    // console.log(data.message);
                 }
             })
             .catch(err => console.log(err))
@@ -190,6 +77,7 @@ export default function InterviewDetails() {
 
     const uploadResume = async (e) => {
         try {
+            setUploading(true);
             const formData = new FormData();
             formData.append("resume", e.target.files[0]);
             const res = await fetch("http://localhost:5000/api/uploadResume", {
@@ -207,18 +95,19 @@ export default function InterviewDetails() {
                     resumeName: data.resumeName.split(".")[0],
                 }));
 
-                console.log("Uploaded successfully!");
             }
         } catch (error) {
             console.log(error);
+        }finally{
+            setUploading(false);
         }
     };
 
     const updateResume = async (e) => {
         try {
+            setUploading(true);
             const formData = new FormData();
             formData.append("resume", e.target.files[0]);
-            console.log(e.target.files[0]);
             const response = await fetch('http://localhost:5000/api/updateResume', {
                 method: 'PUT',
                 headers: {
@@ -235,10 +124,11 @@ export default function InterviewDetails() {
                     resumeName: data.resumeName.split(".")[0]
                 }));
 
-                console.log("Updated successfully!");
             }
         } catch (error) {
             console.error('Error posting data:', error);
+        }finally{
+            setUploading(false);
         }
     };
 
@@ -378,20 +268,17 @@ export default function InterviewDetails() {
                             <select
                                 value={selectedRole}
                                 onChange={(e) => setSelectedRole(e.target.value)}
-                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer disabled:cursor-not-allowed"
+                                disabled={isSubmitting}
                             >
                                 <option value="" hidden>
                                     Select a role
                                 </option>
 
-                                {Object.entries(roles).map(([category, roleList]) => (
-                                    <optgroup key={category} label={category}>
-                                        {roleList.map((role) => (
-                                            <option key={role} value={role}>
-                                                {role}
-                                            </option>
-                                        ))}
-                                    </optgroup>
+                                {roles.map((role) => (
+                                    <option key={role} value={role}>
+                                        {role}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -404,7 +291,8 @@ export default function InterviewDetails() {
                             <select
                                 value={selectedDifficulty}
                                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer disabled:cursor-not-allowed"
+                                disabled={isSubmitting}
                             >
                                 <option value="" hidden>
                                     Select difficulty
@@ -426,7 +314,8 @@ export default function InterviewDetails() {
                             <select
                                 value={selectedDuration}
                                 onChange={(e) => setSelectedDuration(e.target.value)}
-                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                                className="bg-white text-slate-800 border border-slate-300 rounded-lg px-4 py-3 w-full outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer disabled:cursor-not-allowed"
+                                disabled={isSubmitting}
                             >
                                 <option value="" hidden>
                                     Select duration
@@ -474,8 +363,11 @@ export default function InterviewDetails() {
                                         </p>
                                     </div>
                                 </div>
-                                <button onClick={() => resumeInputRef.current.click()} disabled={isSubmitting} className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer">
-                                    Update
+                                <button onClick={() => resumeInputRef.current.click()} disabled={isSubmitting || uploading} className="text-blue-600 font-medium hover:text-blue-800 transition cursor-pointer disabled:cursor-not-allowed">
+                                    {uploading? (<div className="flex items-center gap-2">
+                                        <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                                        <span>Updating...</span>
+                                    </div>) : "Update"}
                                 </button>
 
                                 <input ref={resumeInputRef} type="file" accept=".pdf" className="hidden" onChange={updateResume} />
@@ -485,8 +377,11 @@ export default function InterviewDetails() {
                                 <div className="text-3xl mb-3">📄</div>
                                 <p className="font-medium text-slate-700">No resume uploaded</p>
                                 <p className="text-sm text-slate-500 mt-1 mb-4">Upload your resume to continue</p>
-                                <button onClick={() => resumeInputRef.current.click()} className="px-5 py-2 rounded-lg bg-white border border-slate-300 text-slate-700 font-medium hover:border-blue-500 hover:text-blue-600 transition cursor-pointer">
-                                    Upload Resume
+                                <button onClick={() => resumeInputRef.current.click()} className="px-5 py-2 rounded-lg bg-white border border-slate-300 text-slate-700 font-medium hover:border-blue-500 hover:text-blue-600 transition cursor-pointer disabled:cursor-not-allowed">
+                                    {uploading? (<div className="flex items-center gap-2">
+                                        <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                                        <span>Uploading...</span>
+                                    </div>): "Upload Resume"}
                                 </button>
                                 <input ref={resumeInputRef} type="file" accept=".pdf" className="hidden" onChange={uploadResume} />
                             </div>
@@ -495,7 +390,7 @@ export default function InterviewDetails() {
 
                     <div className="border-t border-slate-200 my-8" />
                     <div className="flex justify-end">
-                        <button className={`w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ${isSubmitting ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleSubmit} disabled={isSubmitting}>Start Interview →</button>
+                        <button className={`w-full sm:w-auto min-w-[220px] px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 ${isSubmitting || uploading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleSubmit} disabled={isSubmitting || uploading}>Start Interview →</button>
                     </div>
                     {error && <div className="text-red-500 text-sm text-center mt-4 mb-0">{error}</div>}
                 </section>

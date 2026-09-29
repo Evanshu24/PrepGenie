@@ -102,7 +102,7 @@ export default function InterviewReview(){
                                 <div>
                                     <p className="text-sm font-medium text-gray-500 mb-2">AI Evaluation</p>
                                     <div className="bg-blue-50 rounded-lg p-4">
-                                        <p className="text-gray-700 whitespace-pre-wrap">{item.aiEvaluation || "Evaluation not available."}</p>
+                                        <p className="text-gray-700 whitespace-pre-wrap">{item?.aiEvaluation?.optimalAnswer || "Evaluation not available."}</p>
                                     </div>
                                 </div>
                             </div>

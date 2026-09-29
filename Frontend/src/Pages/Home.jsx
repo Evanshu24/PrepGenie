@@ -1,121 +1,31 @@
-import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useState ,useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-    FaArrowRight,
-    FaCheck,
-    FaCloudUploadAlt,
-    FaFileAlt,
-    FaMicrophone,
-    FaRobot,
-    FaStar,
-    FaPlay,
-    FaBolt,
-    FaChartLine,
-    FaComments,
-    FaShieldAlt,
-    FaChevronDown,
-} from "react-icons/fa";
+import {FaArrowRight,FaCheck,FaFileAlt,FaMicrophone,FaRobot,FaStar,FaPlay,FaBolt,FaChartLine,FaComments,FaShieldAlt,FaChevronDown,} from "react-icons/fa";
 
 export default function Home() {
+    
+    const [roles,setRoles] = useState([]);
+
     const navigate = useNavigate();
-    const fileInputRef = useRef(null);
 
-    const [uploading, setUploading] = useState(false);
-    const [uploadMessage, setUploadMessage] = useState("");
-    const [selectedRole, setSelectedRole] = useState("");
 
-    const token = localStorage.getItem("token");
-
-    const roles = [
-        "Software Engineer",
-        "Frontend Developer",
-        "Backend Developer",
-        "Full Stack Developer",
-        "Data Analyst",
-        "Data Scientist",
-        "Product Manager",
-        "Business Analyst",
-        "Financial Analyst",
-        "UI/UX Designer",
-        "Marketing Executive",
-        "Management Consultant",
-    ];
-
-    const handleStartInterview = () => {
-        if (!token) {
-            navigate("/signin");
-            return;
-        }
-
-        navigate("/interviewDetails");
-    };
-
-    const handleUploadClick = () => {
-        if (!token) {
-            navigate("/signin");
-            return;
-        }
-
-        fileInputRef.current?.click();
-    };
-
-    const handleResumeUpload = async (e) => {
-        const file = e.target.files?.[0];
-
-        if (!file) return;
-
-        if (file.type !== "application/pdf") {
-            setUploadMessage("Please upload a PDF resume.");
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            setUploadMessage("Resume must be smaller than 5 MB.");
-            return;
-        }
-
-        try {
-            setUploading(true);
-            setUploadMessage("");
-
-            const formData = new FormData();
-            formData.append("resume", file);
-
-            const response = await fetch(
-                "http://localhost:5000/api/uploadResume",
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: formData,
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setUploadMessage(
-                    data.message || "Unable to upload resume."
+    useEffect(() => {
+        const getRoles = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/resume/roles"
                 );
-                return;
+
+                const data = await response.json();
+                setRoles(data.roles);
+            } catch (error) {
+                console.error("Error fetching roles:", error);
             }
+        };
 
-            setUploadMessage("Resume uploaded successfully.");
-
-            setTimeout(() => {
-                navigate("/interviewDetails");
-            }, 700);
-        } catch (error) {
-            console.log("Resume upload error:", error);
-            setUploadMessage(
-                "Something went wrong. Please try again."
-            );
-        } finally {
-            setUploading(false);
-        }
-    };
+        getRoles();
+    }, []);
 
     return (
         <div className="min-h-screen bg-[#f8fafc] text-slate-900 overflow-hidden">
@@ -163,7 +73,7 @@ export default function Home() {
                             <div className="mt-9 flex flex-col sm:flex-row gap-4">
 
                                 <button
-                                    onClick={handleStartInterview}
+                                    onClick={()=>{navigate("signin")}}
                                     className="group flex items-center justify-center gap-3 px-7 py-4 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-xl shadow-blue-600/20"
                                 >
                                     Start mock interview
@@ -171,18 +81,6 @@ export default function Home() {
                                 </button>
 
                             </div>
-
-                            {uploadMessage && (
-                                <p
-                                    className={`mt-4 text-sm font-medium ${
-                                        uploadMessage.includes("successfully")
-                                            ? "text-green-600"
-                                            : "text-red-500"
-                                    }`}
-                                >
-                                    {uploadMessage}
-                                </p>
-                            )}
 
                             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-slate-500">
 
@@ -225,7 +123,7 @@ export default function Home() {
                                     </div>
 
                                     <div className="text-xs text-slate-500">
-                                        PrepGenie AI Interview
+                                        ClankViewer AI Interview
                                     </div>
 
                                     <div className="w-12" />
@@ -457,7 +355,7 @@ export default function Home() {
                         </h2>
 
                         <p className="mt-5 text-lg text-slate-500">
-                            PrepGenie turns your experience into a personalized
+                            ClankViewer turns your experience into a personalized
                             interview practice session.
                         </p>
 
@@ -470,7 +368,7 @@ export default function Home() {
                                 number: "01",
                                 icon: <FaFileAlt />,
                                 title: "Upload your resume",
-                                text: "Give PrepGenie your resume so your interview can reflect your actual experience.",
+                                text: "Give ClankViewer your resume so your interview can reflect your actual experience.",
                             },
                             {
                                 number: "02",
@@ -534,7 +432,7 @@ export default function Home() {
                         <div>
 
                             <p className="text-sm font-bold uppercase tracking-widest text-blue-400">
-                                Why PrepGenie
+                                Why ClankViewer
                             </p>
 
                             <h2 className="mt-4 text-4xl md:text-5xl font-bold leading-tight">
@@ -544,16 +442,16 @@ export default function Home() {
                             </h2>
 
                             <p className="mt-6 text-slate-400 text-lg leading-8 max-w-xl">
-                                PrepGenie is designed to make interview practice
+                                ClankViewer is designed to make interview practice
                                 feel closer to the real thing — personalized,
                                 conversational, and focused on your experience.
                             </p>
 
                             <button
-                                onClick={handleStartInterview}
+                                onClick={()=>{navigate("/signin")}}
                                 className="mt-8 flex items-center gap-3 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 transition font-semibold"
                             >
-                                Try PrepGenie
+                                Try ClankViewer
                                 <FaArrowRight />
                             </button>
 
@@ -629,7 +527,7 @@ export default function Home() {
                         </h2>
 
                         <p className="mt-5 text-slate-500 text-lg">
-                            Choose a role and let PrepGenie help you practice
+                            Choose a role and let ClankViewer help you practice
                             for the conversations that matter.
                         </p>
 
@@ -640,11 +538,7 @@ export default function Home() {
                         {roles.map((role) => (
                             <button
                                 key={role}
-                                className={`px-5 py-3 rounded-full border bg-white text-sm font-medium transition ${
-                                    selectedRole === role
-                                        ? "border-blue-500 text-blue-600 shadow-sm"
-                                        : "border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600"
-                                }`}
+                                className={`px-5 py-3 rounded-full border bg-white text-sm font-medium transition border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600`}
                             >
                                 {role}
                             </button>

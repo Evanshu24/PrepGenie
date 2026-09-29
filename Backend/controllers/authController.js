@@ -46,9 +46,10 @@ const registerUser = async (req, res) => {
         try{
             await sendEmail(
                 email,
-                "PrepGenie Email Verification",
-                `Hello, Thank you for showing your interest in PrepGenie. Your PrepGenie verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
+                "ClankViewer Email Verification",
+                `Hello,\n\nWelcome to ClankViewer! 🎯\n\nWe're excited to have you with us. To verify your email address, please use the verification code below:\n\n━━━━━━━━━━━━━━━━━━━━\n        ${otp}\n━━━━━━━━━━━━━━━━━━━━\n\nThis code will expire in 10 minutes.\n\nFor your security, please do not share this code with anyone.\n\nIf you did not request this verification code, you can safely ignore this email.\n\nBest regards,\nTeam ClankViewer`
             );
+
         }catch(error){
             return res.status(500).json({
                 success: false,
@@ -135,9 +136,10 @@ const resendOTP = async(req,res)=>{
         try{
             await sendEmail(
                 email,
-                "PrepGenie Email Verification",
-                `Hello, Thank you for showing your interest in PrepGenie. Your PrepGenie verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
+                "ClankViewer Email Verification",
+                `Hello,\n\nWelcome to ClankViewer! 🎯\n\nWe're excited to have you with us. To verify your email address, please use the verification code below:\n\n━━━━━━━━━━━━━━━━━━━━\n        ${otp}\n━━━━━━━━━━━━━━━━━━━━\n\nThis code will expire in 10 minutes.\n\nFor your security, please do not share this code with anyone.\n\nIf you did not request this verification code, you can safely ignore this email.\n\nBest regards,\nTeam ClankViewer`
             );
+
         }catch(error){
             console.log(error);
             return res.status(500).json({
@@ -244,9 +246,10 @@ const verifyEmail = async (req, res) => {
        try {
             await sendEmail(
                 email,
-                "PrepGenie Email Verification",
-                "Your Email is verified successfully.",
+                "ClankViewer Email Verification",
+                "Hello,\n\nYour email has been verified successfully! 🎉\n\nWelcome to ClankViewer. You're all set to start using the platform.\n\nBest regards,\nTeam ClankViewer",
             );
+
         } catch (error) {
             console.log("Verification email failed:", error);
         }

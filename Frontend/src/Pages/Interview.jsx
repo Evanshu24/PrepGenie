@@ -5,14 +5,13 @@ export default function Interview() {
     const [interview, setInterview] = useState({ threadId: "", interviewId: "", questionId: "", question: null });
     const [startButton, setStartButton] = useState(true);
     const [stream, setStream] = useState(null);
-    const [recordedChunks, setRecordedChunks] = useState([]);
     const [recordedBlob, setRecordedBlob] = useState(null);
     const [audioBlob, setAudioBlob] = useState(null);
     const [recordingTime, setRecordingTime] = useState(0);
     const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLeaving, setIsLeaving] = useState(false);
-
+    const [aiTransition, setAiTransition] = useState(false);
     const recorderRef = useRef(null);
     const audioRecorderRef = useRef(null);
     const videoRef = useRef(null);
@@ -60,12 +59,9 @@ export default function Interview() {
         }
 
         recorderRef.current = new MediaRecorder(stream, { mimeType: "video/webm" });
-        // console.log(`mimetype is this->${recorderRef.current.mimeType}`);
-        // console.log(MediaRecorder.isTypeSupported("video/webm"));
 
         recorderRef.current.ondataavailable = (e) => {
             if (e.data && e.data.size > 0) {
-                setRecordedChunks(prev => [...prev, e.data]);
                 chunksRef.current.push(e.data);
             }
         }
@@ -107,7 +103,7 @@ export default function Interview() {
 
                     setAudioBlob(blob);
 
-                    console.log("Audio Blob created:", blob, "Size:", blob.size, "Type:", blob.type);
+                    // console.log("Audio Blob created:", blob, "Size:", blob.size, "Type:", blob.type);
                 }
             };
         }
@@ -158,7 +154,6 @@ export default function Interview() {
         if (startButton) {
             chunksRef.current = [];
             audioChunksRef.current = [];
-            setRecordedChunks([]);
             setRecordedBlob(null);
             setAudioBlob(null);
             recorderRef.current?.start();
@@ -197,11 +192,11 @@ export default function Interview() {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.log("Heartbeat failed:", data.message);
+                    // console.log("Heartbeat failed:", data.message);
                 }
             }
             catch (error) {
-                console.log("Heartbeat error:", error);
+                // console.log("Heartbeat error:", error);
             }
         };
 
@@ -213,6 +208,35 @@ export default function Interview() {
 
     }, [interview.interviewId, interview.threadId]);
 
+    useEffect(() => {
+        if (!interview?.question) return;
+
+        window.speechSynthesis.cancel();
+        setAiTransition(true);
+        const utterance = new SpeechSynthesisUtterance(interview.question.question);
+        utterance.rate = 0.95;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        utterance.onstart = () => {
+            setAiTransition(true);
+        };
+
+        utterance.onend = () => {
+            setAiTransition(false);
+        };
+
+        utterance.onerror = () => {
+            setAiTransition(false);
+        };
+        window.speechSynthesis.speak(utterance);
+    
+        return () => {
+            window.speechSynthesis.cancel();
+            setAiTransition(false);
+        };
+    }, [interview?.question]);
+
     const handleSubmit = async () => {
         try {
             if (!audioBlob) {
@@ -221,12 +245,12 @@ export default function Interview() {
             }
             setError("");
             setIsSubmitting(true);
+            setAiTransition(true);
             const formData = new FormData();
             formData.append("audio", audioBlob);
             formData.append("threadId", interview.threadId);
             formData.append("questionId", interview.questionId);
             formData.append("interviewId", interview.interviewId);
-            console.log("sending data now in api");
             const res = await fetch("http://localhost:5000/api/interview/respondInterview",
                 {
                     method: "POST",
@@ -262,11 +286,11 @@ export default function Interview() {
             console.log("Error while submitting: ", error);
         } finally {
             setIsSubmitting(false);
+            setAiTransition(false);
         }
     }
 
     const handleRetake = async () => {
-        console.log("daba dia mc");
         isRetakingRef.current = true;
 
         // Stop the current recording if it is still running
@@ -287,7 +311,6 @@ export default function Interview() {
         setAudioBlob(null);
         chunksRef.current = [];
         audioChunksRef.current = [];
-        setRecordedChunks([]);
 
         setStartButton(true); // Reset recording state
 
@@ -341,7 +364,7 @@ export default function Interview() {
     return (
         <div className="min-h-screen bg-slate-950 text-white">
             <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between">
-                <div className="text-xl font-bold">PrepGenie</div>
+                <div className="text-xl font-bold">ClankViewer</div>
                 <div className="text-xl">
                     <button className={`px-4 py-2 rounded-xl border border-red-500/50 text-red-400 hover:bg-red-500/10 transition ${isSubmitting || isLeaving? "cursor-not-allowed opacity-50" : "cursor-pointer"}`} onClick={handleLeaveInterview} disabled={isSubmitting || isLeaving}>{isLeaving? "Leaving..." : "Leave Interview"}</button>
                 </div>
@@ -354,11 +377,9 @@ export default function Interview() {
                         <div className="w-24 h-24 mx-auto rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-4xl shadow-lg">🤖</div>
 
                         <div className="mt-5 flex justify-center items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-
-                            <span className="text-slate-400 ml-2 text-sm">AI is speaking</span>
+                            <span className={`w-2 h-2 rounded-full bg-blue-400 ${aiTransition ? "animate-bounce" : ""} ${!startButton ? "animate-pulse" : ""}`}></span>
+                            <span className={`w-2 h-2 rounded-full bg-blue-400 ${aiTransition ? "animate-bounce [animation-delay:0.15s]" : ""} ${!startButton ? "animate-pulse [animation-delay:0.15s]" : ""}`}></span>
+                            <span className={`w-2 h-2 rounded-full bg-blue-400 ${aiTransition ? "animate-bounce [animation-delay:0.3s]" : ""} ${!startButton ? "animate-pulse [animation-delay:0.15s]" : ""}`}></span>
                         </div>
                         <div className="mt-7 bg-slate-900 border border-slate-800 rounded-2xl p-7 shadow-xl">
 

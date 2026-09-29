@@ -1,5 +1,4 @@
 import multer from "multer";
-import path from "path";
 
 //So basically I had added this so that it knows how to name and where to save files. //
 const storage = multer.diskStorage({

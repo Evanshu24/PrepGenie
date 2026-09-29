@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState,useEffect} from "react";
+import { useState,useEffect, useRef} from "react";
 import { GoogleLogin } from "@react-oauth/google";
 
 export default function SignUpPage() {
@@ -16,9 +16,21 @@ export default function SignUpPage() {
     const [resendTimer, setResendTimer] = useState(60);
     const [isResending, setIsResending] = useState(false);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-
-    const navigate = useNavigate();
+    const hasCheckedSignIn=useRef(false);
     
+    const token=localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(hasCheckedSignIn.current) return ;
+        hasCheckedSignIn.current=true;
+        if(token){
+            alert("You are already signed in.")
+            navigate("/");
+            return ;
+        }
+    },[]);
+
     useEffect(() => {
         if (!showOtp || resendTimer <= 0) return;
 
@@ -83,7 +95,6 @@ export default function SignUpPage() {
             setResendTimer(30);
 
         } catch (error) {
-            console.error("Signup error:", error);
             setError("Unable to connect to the server. Please try again.");
         } finally {
             setLoading(false);

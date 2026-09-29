@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({showSignIn=false}) {
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.clear();
@@ -19,12 +19,12 @@ const token = localStorage.getItem("token");
                         to="/"
                         className="flex items-center gap-3"
                     >
-                        <span className="text-xl font-bold tracking-tight">Prep
-                            <span className="text-blue-600">Genie</span>
+                        <span className="text-xl font-bold tracking-tight">Clank
+                            <span className="text-blue-600">Viewer</span>
                         </span>
                     </Link>
 
-                    {!token && <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                    {(!token && !showSignIn) && <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
                         <a
                             href="#features"
                             className="hover:text-blue-600 transition"

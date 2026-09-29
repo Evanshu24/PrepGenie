@@ -1,145 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 export default function Dashboard() {
-    const roles = {
-        Engineering: [
-            "Software Engineer",
-            "Frontend Developer",
-            "Backend Developer",
-            "Full Stack Developer",
-            "DevOps Engineer",
-            "Data Scientist",
-            "Machine Learning Engineer",
-            "AI Engineer",
-            "Cybersecurity Engineer",
-            "Cloud Engineer",
-            "QA Engineer",
-            "Embedded Systems Engineer",
-            "Network Engineer",
-            "Database Administrator"
-        ],
-
-        Management: [
-            "Product Manager",
-            "Project Manager",
-            "Program Manager",
-            "Business Analyst",
-            "Management Trainee",
-            "Operations Manager",
-            "Strategy Analyst"
-        ],
-
-        HumanResources: [
-            "HR Executive",
-            "HR Generalist",
-            "HR Business Partner",
-            "Talent Acquisition Specialist",
-            "Technical Recruiter",
-            "Recruiter",
-            "People Operations Associate",
-            "Compensation & Benefits Analyst",
-            "Learning & Development Specialist"
-        ],
-
-        Finance: [
-            "Financial Analyst",
-            "Investment Banking Analyst",
-            "Equity Research Analyst",
-            "Risk Analyst",
-            "Credit Analyst",
-            "Treasury Analyst",
-            "Tax Consultant",
-            "Accountant",
-            "Auditor"
-        ],
-
-        SalesMarketing: [
-            "Sales Executive",
-            "Business Development Executive",
-            "Business Development Manager",
-            "Marketing Executive",
-            "Digital Marketing Specialist",
-            "SEO Specialist",
-            "Content Marketing Specialist",
-            "Social Media Manager",
-            "Brand Manager"
-        ],
-
-        Consulting: [
-            "Management Consultant",
-            "Technology Consultant",
-            "Business Consultant",
-            "Strategy Consultant",
-            "SAP Consultant",
-            "ERP Consultant"
-        ],
-
-        Design: [
-            "UI/UX Designer",
-            "Graphic Designer",
-            "Product Designer",
-            "Motion Designer"
-        ],
-
-        Data: [
-            "Data Analyst",
-            "Business Intelligence Analyst",
-            "Analytics Consultant",
-            "Research Analyst"
-        ],
-
-        Operations: [
-            "Operations Executive",
-            "Supply Chain Analyst",
-            "Logistics Coordinator",
-            "Procurement Specialist",
-            "Inventory Analyst"
-        ],
-
-        CustomerSupport: [
-            "Customer Success Manager",
-            "Customer Support Executive",
-            "Technical Support Engineer",
-            "Implementation Consultant"
-        ],
-
-        Legal: [
-            "Legal Associate",
-            "Compliance Officer",
-            "Corporate Lawyer",
-            "Legal Analyst"
-        ],
-
-        Healthcare: [
-            "Medical Officer",
-            "Pharmacist",
-            "Clinical Research Associate",
-            "Healthcare Administrator"
-        ],
-
-        Education: [
-            "Teacher",
-            "Professor",
-            "Teaching Assistant",
-            "Instructional Designer"
-        ],
-
-        Government: [
-            "Civil Services",
-            "Bank PO",
-            "SSC CGL",
-            "Railway Officer",
-            "Defence Officer"
-        ]
-    };
+    const [roles, setRoles] = useState([]);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [dashboardData, setDashboardData] = useState(null);
     const [selectedRole, setSelectedRole] = useState("");
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
+    const [uploading, setUploading] = useState(false);
     const resumeInputRef = useRef(null);
     const LoginToken = localStorage.getItem("token");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const getRoles = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/resume/roles"
+                );
+
+                const data = await response.json();
+                setRoles(data.roles);
+            } catch (error) {
+                console.error("Error fetching roles:", error);
+            }
+        };
+
+        getRoles();
+    }, []);
+
     useEffect(() => {
         fetch("http://localhost:5000/api/me", {
             headers: {
@@ -151,7 +40,7 @@ export default function Dashboard() {
                 if (data.success) {
                     setUser(data.user);
                 } else {
-                    console.log(data.message);
+                    // console.log(data.message);
                 }
             })
             .catch(err => console.log(err))
@@ -171,7 +60,7 @@ export default function Dashboard() {
                 if (data.success) {
                     setDashboardData(data.data);
                 } else {
-                    console.log(data.message);
+                    // console.log(data.message);
                 }
             })
             .catch(err => console.log(err));
@@ -198,6 +87,7 @@ export default function Dashboard() {
 
     const uploadResume = async (e) => {
         try {
+            setUploading(true);
             const formData = new FormData();
             formData.append("resume", e.target.files[0]);
             const res = await fetch("http://localhost:5000/api/uploadResume", {
@@ -215,18 +105,19 @@ export default function Dashboard() {
                     resumeName: data.resumeName.split(".")[0],
                 }));
 
-                console.log("Uploaded successfully!");
             }
         } catch (error) {
             console.log(error);
+        }finally{
+            setUploading(false);
         }
     };
 
     const updateResume = async (e) => {
         try {
+            setUploading(true);
             const formData = new FormData();
             formData.append("resume", e.target.files[0]);
-            console.log(e.target.files[0]);
             const response = await fetch('http://localhost:5000/api/updateResume', {
                 method: 'PUT',
                 headers: {
@@ -243,10 +134,11 @@ export default function Dashboard() {
                     resumeName: data.resumeName.split(".")[0]
                 }));
 
-                console.log("Updated successfully!");
             }
         } catch (error) {
             console.error('Error posting data:', error);
+        }finally{
+            setUploading(false);
         }
     }
     if (loading) {
@@ -263,8 +155,7 @@ export default function Dashboard() {
             </div>
         );
     }
-    // console.log(LoginToken);
-    console.log(user);
+
     return (
         <>
             <div className="min-h-screen bg-gradient-to-br from-[#EFF6FF] via-white to-[#dbeafe] pt-20">
@@ -276,8 +167,8 @@ export default function Dashboard() {
 
                     <section className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                         <div
-                            onClick={() => navigate("/details")}
-                            className="group bg-[#2563EB] text-white rounded-2xl p-7 shadow-md cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+                            onClick={() => !uploading && navigate("/details")}
+                            className={`group bg-[#2563EB] text-white rounded-2xl p-7 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${uploading ? "cursor-not-allowed" : "cursor-pointer"}`}
                         >
                             <div className="flex items-center justify-between">
                                 <div>
@@ -304,9 +195,13 @@ export default function Dashboard() {
                                     </button>
                                     <button
                                         onClick={() => resumeInputRef.current.click()}
-                                        className="text-sm font-semibold text-gray-600 hover:text-[#2563EB] cursor-pointer"
+                                        disabled={uploading}
+                                        className="text-sm font-semibold text-gray-600 hover:text-[#2563EB] cursor-pointer disabled:cursor-not-allowed"
                                     >
-                                        Update
+                                        {uploading ? (<div className="flex items-center gap-2">
+                                            <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                                            <span>Updating...</span>
+                                        </div>) : "Update"}
                                     </button>
                                     <input
                                         ref={resumeInputRef}
@@ -321,9 +216,13 @@ export default function Dashboard() {
                                     <p className="text-gray-500 text-sm">No resume uploaded yet</p>
                                     <button
                                         onClick={() => resumeInputRef.current.click()}
-                                        className="bg-[#2563EB] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 cursor-pointer"
+                                        disabled={uploading}
+                                        className="bg-[#2563EB] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 cursor-pointer disabled:cursor-not-allowed"
                                     >
-                                        Upload
+                                        {uploading ? (<div className="flex items-center gap-2">
+                                            <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                                            <span>Uploading...</span>
+                                        </div>) : "Upload"}
                                     </button>
                                     <input
                                         ref={resumeInputRef}
@@ -387,12 +286,8 @@ export default function Dashboard() {
                                     onChange={(e) => setSelectedRole(e.target.value)}
                                 >
                                     <option value="" hidden>Select a role</option>
-                                    {Object.entries(roles).map((prop) => (
-                                        <optgroup key={prop[0]} label={prop[0]}>
-                                            {prop[1].map((role) => (
-                                                <option key={role} value={role}>{role}</option>
-                                            ))}
-                                        </optgroup>
+                                    {roles.map((role) => (
+                                        <option key={role} value={role}>{role}</option>
                                     ))}
                                 </select>
 

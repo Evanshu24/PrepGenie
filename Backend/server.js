@@ -15,7 +15,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:10000",
   }),
 );
 // app.use("/uploads", express.static("Uploads"));
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use("/api", authRoutes);
 app.use("/api/interview", interviewRoutes);
 app.use("/api/resume", resumeRoutes);
-app.get("/", (req, res) => {res.send("PrepGenie Backend Running");});
+app.get("/", (req, res) => {res.send("ClankViewer Backend Running");});
 
 const PORT = process.env.PORT || 5000;
 

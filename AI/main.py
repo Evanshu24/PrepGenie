@@ -52,6 +52,7 @@ def respond(thread_id: str = Form(...),audio: UploadFile = File(...)):
     config: RunnableConfig = {"configurable": {"thread_id": thread_id}}
     
     state = graph.get_state(config)
+    question_id = state.values["current_question"]["id"]
     
     with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp:
         temp.write(audio.file.read())
@@ -62,20 +63,19 @@ def respond(thread_id: str = Form(...),audio: UploadFile = File(...)):
     
     os.remove(temp_path)
     print("TRANSCRIPT:", transcript)
-    
     result = graph.invoke(Command(resume=transcript), config=config)
 
     state = graph.get_state(config)
     if state.next == ():
         print(result.get("evaluation"))
-        return {"status": "ended", "evaluation": result.get("evaluation"), "transcript": transcript}
+        return {"status": "ended", "evaluation": result.get("evaluation"), "transcript": transcript, "reference_answer": state.values["reference_answer"][question_id]}
 
     evaluation = result.get("evaluation")
     if evaluation is not None and evaluation.status == "followup":
         question_text = evaluation.followup_question
     else:
         question_text = result["current_question"]["question"]
-    return {"status": "continue","transcript":transcript, "question": question_text}
+    return {"status": "continue","transcript":transcript, "question": question_text, "reference_answer": state.values["reference_answer"][question_id]}
 
 @app.post("/interview/tts")
 def get_question_audio(text: str):

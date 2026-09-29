@@ -9,65 +9,70 @@ import InterviewDetails from './Pages/InterviewDetails.jsx';
 import Interview from './Pages/Interview.jsx';
 import AllInterviews from './Pages/AllInterviews.jsx';
 import InterviewReview from './Pages/InterviewReview.jsx';
+import Terms from "./Pages/Terms.jsx";
+import Privacy from "./Pages/Privacy.jsx"
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <ProtectedRoute>
-              <>
-                <Navbar/>
-                <Dashboard />
-                <Footer/>
-              </>
-            </ProtectedRoute>
-          </>
-        }
-        />
-        <Route path="/signin" element={
-          <>
-            <Navbar />
-            <SignInPage />
-          </>
-        }
-        />
-        <Route path="/signup" element={
-          <>
-            <Navbar/>
-            <SignUp />
-          </>
-        }
-        />
+      <ScrollToTop />
+        <Routes>
+              <Route path="/" element={
+                <>
+                  <ProtectedRoute>
+                    <>
+                      <Navbar/>
+                      <Dashboard />
+                      <Footer/>
+                    </>
+                  </ProtectedRoute>
+                </>
+              }
+              />
+              <Route path="/signin" element={
+                <>
+                  <Navbar showSignIn={true}/>
+                  <SignInPage />
+                </>
+              }
+              />
+              <Route path="/signup" element={
+                <>
+                  <Navbar showSignIn={true}/>
+                  <SignUp />
+                </>
+              }
+              />
 
-        <Route path="/details" element={
-          <ProtectedRoute>
-            <InterviewDetails />
-          </ProtectedRoute>
-        }/>
-      
-      <Route path="/interview" element={
-        <ProtectedRoute>
-          <Interview />
-        </ProtectedRoute>
-      }/>
+              <Route path="/details" element={
+                <ProtectedRoute>
+                  <InterviewDetails />
+                </ProtectedRoute>
+              }/>
+            
+            <Route path="/interview" element={
+              <ProtectedRoute>
+                <Interview />
+              </ProtectedRoute>
+            }/>
 
-      <Route path="/all-Interviews" element={
-        <ProtectedRoute>
-            <AllInterviews/>
-        </ProtectedRoute>
-      }/>
-       
-      <Route
-          path="/interview-review/:interviewId" element={
-            <ProtectedRoute>
-              <InterviewReview/>
-            </ProtectedRoute>
-          }
-      />
-      
-      </Routes>
+            <Route path="/all-Interviews" element={
+              <ProtectedRoute>
+                  <AllInterviews/>
+              </ProtectedRoute>
+            }/>
+            
+            <Route
+                path="/interview-review/:interviewId" element={
+                  <ProtectedRoute>
+                    <InterviewReview/>
+                  </ProtectedRoute>
+                }
+            />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />   
+        </Routes>
     </BrowserRouter>
   )
 }

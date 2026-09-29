@@ -1,7 +1,6 @@
-import {useEffect, useState } from "react";
+import {useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { FaLinkedin, FaEye } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 
 export default function SignInPage() {
@@ -11,8 +10,21 @@ export default function SignInPage() {
     const [error,setError] = useState("");
     const [isSigning, setIsSigning] = useState(false);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const token=localStorage.getItem("token");
+
+    const hasCheckedSignIn=useRef(false);
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(hasCheckedSignIn.current) return ;
+        hasCheckedSignIn.current=true;
+        if(token){
+            alert("You are already signed in.")
+            navigate("/");
+            return ;
+        }
+    },[]);
 
     useEffect(() => {
             const handleOnline = () => setIsOnline(true);
@@ -46,7 +58,6 @@ export default function SignInPage() {
             const data = await res.json();
 
             if (!res.ok) {
-                console.log(data.message);
                 setError(data.message || "Login failed");
                 setIsSigning(false);
                 return;
@@ -62,6 +73,7 @@ export default function SignInPage() {
             setIsSigning(false);
         }
     };
+    
 
     return (
         <>
