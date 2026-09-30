@@ -15,10 +15,13 @@ class ReferenceAnswer(TypedDict):
     sources: List[str]
     fetched: bool
 
+
 class BaseMessages(TypedDict):
     messages: Annotated[List[BaseMessage], add_messages]
     role: Annotated[str, "Role for the interview"]
     keywords: Annotated[List[str], "List of keywords generated from parsing the resume"]
+    difficulty: Annotated[str, "Difficulty of the interview"]
+    duration: Annotated[int, "Time limit of the interview"]
     questions: Annotated[List[Question], "List of questions from the question bank"]
     current_idx: Annotated[int, "index of current question"]
     current_question: Annotated[

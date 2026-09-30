@@ -9,7 +9,7 @@ export default function allInterviews() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/me", {
+        fetch("/api/me", {
             headers: {
                 Authorization: `Bearer ${LoginToken}`
             }
@@ -29,7 +29,7 @@ export default function allInterviews() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/interview/dashboard", {
+        fetch("/api/interview/dashboard", {
             headers: {
                 Authorization: `Bearer ${LoginToken}`
             }

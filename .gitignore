@@ -5,7 +5,36 @@
 Backend/node_modules/
 Backend/.env
 Backend/Uploads/
-# Build directory
+
+# =========================
+# Frontend
+# =========================
+
+Frontend/node_modules/
+Frontend/.env
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local
+
+# =========================
+# Python - AI
+# =========================
+
+AI/.venv/
+AI/venv/
+AI/.env/
+AI/__pycache__/
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Backend parser
+# =========================
+
 Backend/parser/build/
 
 # CMake generated files
@@ -18,36 +47,39 @@ Backend/parser/compile_commands.json
 # Local/project data
 Backend/parser/data/
 
-# =========================
-# Python - AI
-# =========================
-
-AI/.venv/
-AI/.env
-AI/.workmux.yaml
-
-# Python cache / compiled files
-__pycache__/
-*.py[cod]
-*$py.class
-
-
-# =========================
-# AI generated / local data
-# =========================
-
-
+# PDF files
+Backend/parser/*.pdf
 
 # =========================
 # General environment files
 # =========================
 
 .env
+**/.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# =========================
+# Build / distribution / cache
+# =========================
+
+**/build/
+**/dist/
+**/.cache/
+
+# =========================
+# Logs
+# =========================
+
+*.log
+
+# =========================
+# Git / local tooling
+# =========================
+
+.git/
 
 # =========================
 # IDE / OS

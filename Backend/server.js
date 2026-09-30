@@ -23,7 +23,9 @@ app.use(express.json());
 app.use("/api", authRoutes);
 app.use("/api/interview", interviewRoutes);
 app.use("/api/resume", resumeRoutes);
-app.get("/", (req, res) => {res.send("PrepGenie Backend Running");});
+app.get("/", (req, res) => {
+  res.send("PrepPilot Backend Running");
+});
 
 const PORT = process.env.PORT || 5000;
 
