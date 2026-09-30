@@ -1,21 +1,19 @@
-huggingface_hub
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+pymongo
+groq
 langchain
 langgraph
-langsmith
-dotenv
-ddgs
-grandalf
-bs4
-langchain_google_genai
-langchain_openai
-langchain_huggingface
+#langsmith
 langchain_groq
-pymongo
-fastapi
+#langchain_google_genai
+#langchain_openai
+# huggingface_hub
+ddgs
+beautifulsoup4
+#grandalf
 gTTS
 SpeechRecognition
 pydub
-openai-whisper
-# ffmpeg
-python-multipart
-uvicorn

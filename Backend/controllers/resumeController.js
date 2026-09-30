@@ -31,15 +31,15 @@ export const analyzeResumeController = async (req, res) => {
 };
 
 export const getRoles = async (req, res) => {
-    try {
-        const data = await Allowed.findOne({});
-        res.status(200).json({
-            roles: data?.roles || []
-        });
-    } catch (error) {
-        console.error("Error fetching roles:", error);
-        res.status(500).json({
-            message: "Failed to fetch roles"
-        });
-    }
+  try {
+    const data = await Allowed.findOne({});
+    res.status(200).json({
+      roles: data?.roles || [],
+    });
+  } catch (error) {
+    console.error("Error fetching roles:", error);
+    res.status(500).json({
+      message: "Failed to fetch roles",
+    });
+  }
 };

@@ -3,26 +3,25 @@ from langgraph.types import Command
 from pydantic import BaseModel
 from typing import List
 import uuid
-import whisper
 import tempfile
 import os
 from app import graph
 from utils.state import BaseMessages
 from langchain_core.runnables import RunnableConfig
-from fastapi import UploadFile, File
 from fastapi.responses import FileResponse
 from utils.speech_service import text_to_speech, speech_to_text
 from fastapi import HTTPException
-import os
 import shutil
+from utils.models import stt_model, stt_model_name
 
 app = FastAPI()
 
-whisper_model = whisper.load_model("base.en")
 
 class StartRequest(BaseModel):
     role: str
     keywords: List[str] = []
+    difficulty: str
+    duration: int
 
 
 @app.post("/interview/start")
@@ -34,6 +33,8 @@ def start_interview(payload: StartRequest):
         "messages": [],
         "role": payload.role,
         "keywords": payload.keywords,
+        "difficulty": payload.difficulty,
+        "duration": payload.duration,
         "questions": [],
         "current_idx": 0,
         "current_question": {"id": "", "question": "", "difficulty": ""},
@@ -44,64 +45,67 @@ def start_interview(payload: StartRequest):
     }
 
     result = graph.invoke(initial_state, config=config)
-    return {"thread_id": thread_id, "question": result["current_question"]}
+
+    return {
+        "thread_id": thread_id,
+        "question": result["current_question"],
+    }
 
 
 @app.post("/interview/respond")
-def respond(thread_id: str = Form(...),audio: UploadFile = File(...)):
+def respond(thread_id: str = Form(...), audio: UploadFile = File(...)):
     config: RunnableConfig = {"configurable": {"thread_id": thread_id}}
-    
+
     state = graph.get_state(config)
     question_id = state.values["current_question"]["id"]
-    
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp:
         temp.write(audio.file.read())
         temp_path = temp.name
-    
-    whisper_result = whisper_model.transcribe(temp_path)
-    transcript = whisper_result["text"]
-    
+
+    with open(temp_path, "rb") as f:
+        whisper_result = stt_model.audio.transcriptions.create(
+            file=(os.path.basename(temp_path), f.read()),
+            model=stt_model_name,
+            language="en",
+            response_format="text",
+        )
+
+    transcript = (
+        whisper_result if isinstance(whisper_result, str) else whisper_result.text
+    )
+    transcript = transcript.strip()
+
     os.remove(temp_path)
+
     print("TRANSCRIPT:", transcript)
+
     result = graph.invoke(Command(resume=transcript), config=config)
 
     state = graph.get_state(config)
+
+    reference_answer = state.values.get("reference_answer", {}).get(question_id)
+
     if state.next == ():
         print(result.get("evaluation"))
-        return {"status": "ended", "evaluation": result.get("evaluation"), "transcript": transcript, "reference_answer": state.values["reference_answer"][question_id]}
+
+        return {
+            "status": "ended",
+            "evaluation": result.get("evaluation"),
+            "transcript": transcript,
+            "reference_answer": reference_answer,
+        }
 
     evaluation = result.get("evaluation")
+
     if evaluation is not None and evaluation.status == "followup":
         question_text = evaluation.followup_question
     else:
         question_text = result["current_question"]["question"]
-    return {"status": "continue","transcript":transcript, "question": question_text, "reference_answer": state.values["reference_answer"][question_id]}
 
-@app.post("/interview/tts")
-def get_question_audio(text: str):
-    target_path = os.path.join("data", "output_question.mp3")
-    
-    audio_path = text_to_speech(text, output_path=target_path)
-    return FileResponse(audio_path, media_type="audio/mpeg", filename="question.mp3")
-
-
-@app.post("/interview/stt")
-async def transcribe_answer(file: UploadFile = File(...)):
-    # Validate file extension
-    if not file.filename.lower().endswith(".wav"):
-        raise HTTPException(
-            status_code=400, 
-            detail="Invalid file format. Please upload a .wav audio file."
-        )
-
-    temp_file_path = os.path.join("data", f"temp_{file.filename}")
-    
-    with open(temp_file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-        
-    transcribed_text = speech_to_text(temp_file_path)
-    
-    if os.path.exists(temp_file_path):
-        os.remove(temp_file_path)
-        
-    return {"transcribed_answer": transcribed_text}
+    return {
+        "status": "continue",
+        "transcript": transcript,
+        "question": question_text,
+        "reference_answer": reference_answer,
+    }
