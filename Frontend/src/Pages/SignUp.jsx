@@ -174,15 +174,25 @@ export default function SignUpPage() {
     }
   };
 
+  const [googleWidth, setGoogleWidth] = useState(400);
+
+  useEffect(() => {
+    const update = () =>
+      setGoogleWidth(Math.max(200, Math.min(400, window.innerWidth - 80)));
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
     <>
-      <div className="min-h-[90vh] flex justify-center items-center pt-20">
-        <div className="w-[520px] bg-white p-[45px] rounded-[20px] shadow-[0_10px_40px_rgba(9,10,12,0.15)]">
-          <h3 className="text-center text-3xl font-bold mb-[15px]">
+      <div className="min-h-[90vh] flex justify-center items-start sm:items-center px-4 pt-24 pb-10 sm:pt-20">
+        <div className="w-full max-w-[520px] bg-white p-6 sm:p-[45px] rounded-[20px] shadow-[0_10px_40px_rgba(9,10,12,0.15)]">
+          <h3 className="text-center text-2xl sm:text-3xl font-bold mb-3 sm:mb-[15px]">
             Create a free account
           </h3>
 
-          <p className="text-center text-[#666] mb-[35px]">
+          <p className="text-center text-[#666] mb-6 sm:mb-[35px]">
             Already have an account?{" "}
             <Link
               to="/signin"
@@ -192,24 +202,21 @@ export default function SignUpPage() {
             </Link>
           </p>
 
-          <div className="w-full h-[58px] flex justify-center items-center">
+          <div className="w-full min-h-[48px] sm:h-[58px] flex justify-center items-center">
             {isOnline ? (
               <GoogleLogin
                 onSuccess={async (credentialResponse) => {
                   try {
-                    const res = await fetch(
-                      "/api/auth/google",
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          credential: credentialResponse.credential,
-                          mode: "signup",
-                        }),
+                    const res = await fetch("/api/auth/google", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
                       },
-                    );
+                      body: JSON.stringify({
+                        credential: credentialResponse.credential,
+                        mode: "signup",
+                      }),
+                    });
 
                     const data = await res.json();
 
@@ -232,7 +239,7 @@ export default function SignUpPage() {
                 shape="rectangular"
                 size="large"
                 logo_alignment="center"
-                width="400"
+                width={String(googleWidth)}
               />
             ) : (
               <button
@@ -245,18 +252,22 @@ export default function SignUpPage() {
             )}
           </div>
 
-          <div className="flex items-center my-[30px]">
+          <div className="flex items-center my-6 sm:my-[30px]">
             <div className="flex-1 h-[1px] bg-[#ddd]"></div>
-            <span className="mx-[15px] text-[#999]">or continue with</span>
+            <span className="mx-3 sm:mx-[15px] text-sm sm:text-base text-[#999] text-center">
+              or continue with
+            </span>
             <div className="flex-1 h-[1px] bg-[#ddd]"></div>
           </div>
+
           {!showOtp ? (
             <form onSubmit={handleSignUp}>
               <input
                 type="email"
                 value={email}
                 placeholder="Your email address"
-                className="w-full h-[56px] px-4 mb-3 border border-[#d8e1f2] rounded-xl text-lg focus:outline-none focus:border-[#2563EB]"
+                autoComplete="email"
+                className="w-full h-[52px] sm:h-[56px] px-4 mb-3 border border-[#d8e1f2] rounded-xl text-base sm:text-lg focus:outline-none focus:border-[#2563EB]"
                 disabled={loading}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -265,24 +276,27 @@ export default function SignUpPage() {
                 type="text"
                 value={name}
                 placeholder="Your name"
-                className="w-full h-[56px] px-4 mb-3 border border-[#d8e1f2] rounded-xl text-lg focus:outline-none focus:border-[#2563EB]"
+                autoComplete="name"
+                className="w-full h-[52px] sm:h-[56px] px-4 mb-3 border border-[#d8e1f2] rounded-xl text-base sm:text-lg focus:outline-none focus:border-[#2563EB]"
                 disabled={loading}
                 onChange={(e) => setName(e.target.value)}
               />
 
-              <div className="relative mb-6">
+              <div className="relative mb-5 sm:mb-6">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   placeholder="Enter your password"
-                  className="w-full h-[56px] px-4 pr-12 border border-[#d8e1f2] rounded-xl text-lg focus:outline-none focus:border-[#2563EB]"
+                  autoComplete="new-password"
+                  className="w-full h-[52px] sm:h-[56px] px-4 pr-12 border border-[#d8e1f2] rounded-xl text-base sm:text-lg focus:outline-none focus:border-[#2563EB]"
                   disabled={loading}
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <button
                   type="button"
-                  className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[#999] hover:text-[#2563EB] cursor-pointer"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#999] hover:text-[#2563EB] cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -296,7 +310,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 disabled={loading || !isOnline}
-                className="w-full h-[58px] border-none rounded-[12px] bg-[#2563EB] text-white text-[22px] font-semibold transition-colors duration-300 hover:bg-[#1d4ed8] disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full h-[52px] sm:h-[58px] border-none rounded-[12px] bg-[#2563EB] text-white text-lg sm:text-[22px] font-semibold transition-colors duration-300 hover:bg-[#1d4ed8] disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? "Creating account..." : "Sign up"}
               </button>
@@ -309,7 +323,7 @@ export default function SignUpPage() {
                 maxLength="6"
                 value={otp}
                 placeholder="Enter 6-digit OTP"
-                className="w-full h-[56px] px-4 mb-4 border border-[#d8e1f2] rounded-xl text-lg text-center tracking-[8px] focus:outline-none focus:border-[#2563EB]"
+                className="w-full h-[52px] sm:h-[56px] px-4 mb-4 border border-[#d8e1f2] rounded-xl text-base sm:text-lg text-center tracking-[4px] sm:tracking-[8px] focus:outline-none focus:border-[#2563EB]"
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                 autoComplete="one-time-code"
                 disabled={isVerifying || isResending}
@@ -322,7 +336,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 disabled={isVerifying}
-                className="w-full h-[58px] border-none rounded-[12px] bg-[#2563EB] text-white text-[22px] font-semibold transition-colors duration-300 hover:bg-[#1d4ed8] disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full h-[52px] sm:h-[58px] border-none rounded-[12px] bg-[#2563EB] text-white text-lg sm:text-[22px] font-semibold transition-colors duration-300 hover:bg-[#1d4ed8] disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isVerifying ? "Verifying..." : "Verify Email"}
               </button>
@@ -330,7 +344,7 @@ export default function SignUpPage() {
                 type="button"
                 onClick={handleResendOTP}
                 disabled={resendTimer > 0 || isResending || isVerifying}
-                className="w-full mt-3 text-[#2563EB] font-semibold disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full mt-3 py-2 text-[#2563EB] font-semibold disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isResending
                   ? "Sending..."
